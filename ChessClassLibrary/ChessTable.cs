@@ -9,8 +9,9 @@ namespace ChessClassLibrary
 {
     public class ChessTable
     {
-        private Spot[,] Table { get; set; }
+        public Spot[,] Table { get; set; }
         private List<ChessPiece> CapturedPieces { get; set; }
+        private List<ChessPiece> Pieces { get; set; }
 
         public ChessTable() {
 
@@ -78,7 +79,10 @@ namespace ChessClassLibrary
             Table[5, 8].Occupied = true;
         }
 
-        public bool MovePiece() {
+        public bool MovePiece(string piece, int originColumn, int originRow, int destColumn, int destRow, string player) {
+
+            Table[originRow, originColumn].Piece.TryMove(destRow, destColumn, player);
+
             return true;
         }
 

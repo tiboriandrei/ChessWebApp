@@ -18,7 +18,7 @@ namespace ChessClassLibrary.Pieces
             throw new NotImplementedException();
         }
           
-        public override bool TryMove(ChessTable table, Spot origin, Spot dest)
+        public override bool TryMove(int destColumn, int destRow, string player)
         {
             throw new NotImplementedException();
         }

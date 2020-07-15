@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ChessWebApp.Models;
+using ChessClassLibrary;
 
 namespace ChessWebApp.Controllers
 {
@@ -40,11 +41,20 @@ namespace ChessWebApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult ChessGame()
+        Game chessGame;  //maybe put it in a class (ex: globalVar.cs)
+        public IActionResult StartNewChessGame()
         {
+            Game chessGame = new Game();
+
             return View();
         }
 
+        [HttpPost]
+        public IActionResult TryMove(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
+        {
+            chessGame.Table.MovePiece(piece, originColumn, originRow, destColumn, destRow, player);
 
+            return View();
+        }
     }
 }

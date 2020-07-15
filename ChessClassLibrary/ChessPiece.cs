@@ -39,6 +39,6 @@ namespace ChessClassLibrary
         }
 
         public abstract void Display();  
-        public abstract bool TryMove(ChessTable table, Spot origin, Spot dest);  
+        public abstract bool TryMove(int destColumn, int destRow, string player);  
     }
 }

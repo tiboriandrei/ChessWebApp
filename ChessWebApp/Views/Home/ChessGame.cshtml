@@ -10,7 +10,7 @@
 
     <h2>ChessGame</h2>
 
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link runat="server" rel="stylesheet" href="~/css/site.css" />
 
     <div id="board">
         <div row="8" column="1" class="square-grey" player="white" piece="rook"></div>
@@ -103,28 +103,158 @@
 
         $(document).ready(function () {
 
-            var selection = { piece: '', player: '', row: '', column: '' }
-            playerturn = 'white';
-
+            var selection = { piece: '', player: '', row: '', column: '' },
+                playerturn = 'white',
+                whiteSelectedPiece = 'no',
+                blackSelectedPiece = 'no';
+            var originColumn,
+                originRow,
+                destColumn,
+                destRow,
+                piece;
+                                   
             $("[piece]").each(function () {
 
-                
                 let player = $(this).attr('player'),
                     piece = $(this).attr('piece'),
                     boardsquarecolor = $(this).css('background-color')
 
-                if (piece != '' && player != '') {
-                    //$(this).attr('empty', 'true')
-                    //$(this).removeAttr('player').removeAttr('piece')
-                    //return
-                    console.log(player);
-                    $(this).css("background", "url(~/wwwroot/images/" + player + piece + ".png)").css("background-size", "75px 75px").css('background-color', boardsquarecolor);
+                if (piece != '' && player != '') {                    
+                    $(this).css("background", "url(/images/" + player + piece + ".png)").css("background-size", "75px 75px").css('background-color', boardsquarecolor);
+                }
+            })
 
+            $("[piece]").on("click", function () {
+
+                if (whiteSelectedPiece != 'no' && playerturn == 'white') {
+                    destColumn = $(this).attr('column');
+                    destRow = $(this).attr('row');                    
+
+                    // { if move is valid }
+
+                    option = {
+                        url: "/Home/TryMove",
+                        dataType: "json",
+                        type: "POST",                        
+                        data: {
+                            "originColumn": originColumn,
+                            "originRow": originRow,
+                            "destColumn": destColumn,
+                            "destRow": destRow,
+                            "player": playerturn,
+                            "piece": whiteSelectedPiece
+                        },
+                        success: function (data) {
+                            // alert(data);
+                        },
+                        failure: function (errMsg) {
+                            alert(errMsg);
+                        }
+                    };
+
+                    $.ajax(option);
+
+                    console.log("valid white move");
+
+                    if ($("[column='" + originColumn + "'][row='" + originRow + "']").hasClass('square-grey')) {
+                        var bgcolor = 'grey';
+                    }
+                    else {
+                        var bgcolor = 'white';    
+                    }
+
+                    //remove piece
+                    $("[column='" + originColumn + "'][row='" + originRow + "']").css('background-image', 'none')
+                        .css('background-color', bgcolor).attr('piece', '').attr('player', '');
+
+                    var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
+
+                    //add (move) piece
+                    $("[column='" + destColumn + "'][row='" + destRow + "']")
+                        .css("background", "url(/images/" + playerturn + whiteSelectedPiece + ".png)")
+                        .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
+
+                    whiteSelectedPiece = 'no';
+                    playerturn = 'black';  //maybe make server coordonate
                 }
 
+                if (blackSelectedPiece != 'no' && playerturn == 'black') {
+                    var destColumn = $(this).attr('column');
+                    var destRow = $(this).attr('row');
 
+                    // { if move is valid }
+
+                    option = {
+                        url: "/Home/TryMove",
+                        dataType: "json",
+                        type: "POST",
+                        data: {
+                            "originColumn": originColumn,
+                            "originRow": originRow,
+                            "destColumn": destColumn,
+                            "destRow": destRow,
+                            "player": playerturn,
+                            "piece": blackSelectedPiece
+                        },
+                        success: function (data) {
+                            // alert(data);
+                        },
+                        failure: function (errMsg) {
+                            alert(errMsg);
+                        }
+                    };
+
+                    $.ajax(option);
+
+                    console.log("valid black move");
+
+                    if ($("[column='" + originColumn + "'][row='" + originRow + "']").hasClass('square-grey')) {
+                        var bgcolor = 'grey';
+                    }
+                    else {
+                        var bgcolor = 'white';
+                    }
+
+                    //remove piece
+                    $("[column='" + originColumn + "'][row='" + originRow + "']").css('background-image', 'none')
+                        .css('background-color', bgcolor).attr('piece', '').attr('player', '');
+
+                    var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
+                    //add (move) piece
+                    $("[column='" + destColumn + "'][row='" + destRow + "']")
+                        .css("background", "url(/images/" + playerturn + blackSelectedPiece + ".png)")
+                        .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
+                                        
+                    blackSelectedPiece = 'no';
+                    playerturn = 'white';
+                }
             })
+
+            $("[piece]").on("click", function () {
+               
+                if (playerturn == 'white' && $(this).attr('player') == 'white') {
+                    console.log(playerturn);
+
+                    originColumn = $(this).attr('column');
+                    originRow = $(this).attr('row');
+                    whiteSelectedPiece = $(this).attr('piece');                   
+                }
+
+                if (playerturn == 'black' && $(this).attr('player') == 'black') {
+                    console.log(playerturn);
+
+                    originColumn = $(this).attr('column');
+                    originRow = $(this).attr('row');
+                    blackSelectedPiece = $(this).attr('piece');
+                }
+            })
+
+            
+
         });
+
+        
+
 
     </script>
 }
