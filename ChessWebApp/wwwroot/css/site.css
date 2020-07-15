@@ -1,5 +1,26 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
+
+.square {
+width:75px;
+height:75px;
+border:1px solid black;
+display:inline-block;
+}
+
+.square-grey {
+    background-color:grey;
+    width: 75px;
+    height: 75px;
+    border: 1px solid black;
+    display: inline-block;
+}
+
+#board {
+    width:100%;
+    text-align:center;
+}
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
