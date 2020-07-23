@@ -133,7 +133,7 @@
                     // { if move is valid }
 
                     option = {
-                        url: "/Home/TryMove",
+                        url: "/Home/Move",
                         dataType: "json",
                         type: "POST",                        
                         data: {
@@ -144,8 +144,34 @@
                             "player": playerturn,
                             "piece": whiteSelectedPiece
                         },
-                        success: function (data) {
-                            // alert(data);
+                        success: function (data) {                            
+                            console.log(data);
+
+                            if (data == true) {
+                                if ($("[column='" + originColumn + "'][row='" + originRow + "']").hasClass('square-grey')) {
+                                    var bgcolor = 'grey';
+                                }
+                                else {
+                                    var bgcolor = 'white';
+                                }
+
+                                //remove piece
+                                $("[column='" + originColumn + "'][row='" + originRow + "']").css('background-image', 'none')
+                                    .css('background-color', bgcolor).attr('piece', '').attr('player', '');
+
+                                var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
+
+                                //add (move) piece
+                                $("[column='" + destColumn + "'][row='" + destRow + "']")
+                                    .css("background", "url(/images/" + playerturn + whiteSelectedPiece + ".png)")
+                                    .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
+
+                                whiteSelectedPiece = 'no';
+                                playerturn = 'black';  //maybe make server coordonate
+                            }
+                            else {
+                                alert("Illegal move. Try again.");
+                            }
                         },
                         failure: function (errMsg) {
                             alert(errMsg);
@@ -153,29 +179,6 @@
                     };
 
                     $.ajax(option);
-
-                    console.log("valid white move");
-
-                    if ($("[column='" + originColumn + "'][row='" + originRow + "']").hasClass('square-grey')) {
-                        var bgcolor = 'grey';
-                    }
-                    else {
-                        var bgcolor = 'white';    
-                    }
-
-                    //remove piece
-                    $("[column='" + originColumn + "'][row='" + originRow + "']").css('background-image', 'none')
-                        .css('background-color', bgcolor).attr('piece', '').attr('player', '');
-
-                    var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
-
-                    //add (move) piece
-                    $("[column='" + destColumn + "'][row='" + destRow + "']")
-                        .css("background", "url(/images/" + playerturn + whiteSelectedPiece + ".png)")
-                        .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
-
-                    whiteSelectedPiece = 'no';
-                    playerturn = 'black';  //maybe make server coordonate
                 }
 
                 if (blackSelectedPiece != 'no' && playerturn == 'black') {
@@ -185,7 +188,7 @@
                     // { if move is valid }
 
                     option = {
-                        url: "/Home/TryMove",
+                        url: "/Home/Move",
                         dataType: "json",
                         type: "POST",
                         data: {
@@ -196,8 +199,34 @@
                             "player": playerturn,
                             "piece": blackSelectedPiece
                         },
-                        success: function (data) {
-                            // alert(data);
+                        success: function (data) {                            
+                            console.log(data);
+
+                            if (data == true) {
+
+                                if ($("[column='" + originColumn + "'][row='" + originRow + "']").hasClass('square-grey')) {
+                                    var bgcolor = 'grey';
+                                }
+                                else {
+                                    var bgcolor = 'white';
+                                }
+
+                                //remove piece
+                                $("[column='" + originColumn + "'][row='" + originRow + "']").css('background-image', 'none')
+                                    .css('background-color', bgcolor).attr('piece', '').attr('player', '');
+
+                                var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
+                                //add (move) piece
+                                $("[column='" + destColumn + "'][row='" + destRow + "']")
+                                    .css("background", "url(/images/" + playerturn + blackSelectedPiece + ".png)")
+                                    .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
+
+                                blackSelectedPiece = 'no';
+                                playerturn = 'white';
+                            }
+                            else {
+                                alert("Illegal move. Try again.");
+                            }
                         },
                         failure: function (errMsg) {
                             alert(errMsg);
@@ -205,28 +234,6 @@
                     };
 
                     $.ajax(option);
-
-                    console.log("valid black move");
-
-                    if ($("[column='" + originColumn + "'][row='" + originRow + "']").hasClass('square-grey')) {
-                        var bgcolor = 'grey';
-                    }
-                    else {
-                        var bgcolor = 'white';
-                    }
-
-                    //remove piece
-                    $("[column='" + originColumn + "'][row='" + originRow + "']").css('background-image', 'none')
-                        .css('background-color', bgcolor).attr('piece', '').attr('player', '');
-
-                    var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
-                    //add (move) piece
-                    $("[column='" + destColumn + "'][row='" + destRow + "']")
-                        .css("background", "url(/images/" + playerturn + blackSelectedPiece + ".png)")
-                        .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
-                                        
-                    blackSelectedPiece = 'no';
-                    playerturn = 'white';
                 }
             })
 

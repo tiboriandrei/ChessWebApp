@@ -1,0 +1,21 @@
+[
+  {
+    "Player": {
+      "Name": "Magnus Carlsen",
+      "NrOfWins": 0,
+      "NrOfLosses": 0,
+      "NrOfDraws": 0,
+      "MatchHistory": "n/a"
+    }
+  },
+  
+  {  
+    "Player": {
+      "Name": "Garry Kasparov",
+      "NrOfWins": 0,
+      "NrOfLosses": 0,
+      "NrOfDraws": 0,
+      "MatchHistory": "n/a"
+    }    
+  }
+]

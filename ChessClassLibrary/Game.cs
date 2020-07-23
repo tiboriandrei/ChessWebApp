@@ -7,24 +7,31 @@ using System.Threading.Tasks;
 namespace ChessClassLibrary
 {
     public class Game
-    {
-        public Game()
+    {        
+        public Table Table { get; set; }
+        public Player Player1 { get; set; }
+        public Player Player2 { get; set; }
+
+        public Game(Player p1, Player p2)
         {
-            Table = new ChessTable();
-
-            //get data from db
-            string name = "";
-            int nrOfWins = 0, nrOfLosses = 0, nrOfDraws = 0;
-            //
-
-            Player1 = new Player(name, nrOfWins, nrOfLosses, nrOfDraws);
-            Player2 = new Player(name, nrOfWins, nrOfLosses, nrOfDraws);
+            this.Table = new Table();
+            this.Player1 = p1;
+            this.Player2 = p2;
         }
 
-        public ChessTable Table { get; set; }
-        private Player Player1 { get; set; }
-        private Player Player2 { get; set; }
+        public Game(Player p1, Player p2, Table restoredTable)
+        {
+            this.Table = restoredTable;
+            this.Player1 = p1;
+            this.Player2 = p2;
+        }
 
-
+        public bool MovePiece(string piece, int originX, int originY, int destX, int destY, string player)
+        {
+            var origin = new Spot(originX, originY);
+            var dest = new Spot(destX, destY);
+            
+            return Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, player); 
+        }
     }
 }

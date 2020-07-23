@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "ChessConnectionString": "Data Source=(localdb)\\ProjectsV13;Initial Catalog=ChessGameDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+  }
+}

@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessPiece.cs" />
-    <Compile Include="ChessTable.cs" />
+    <Compile Include="Table.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Pieces\Horseman.cs" />
     <Compile Include="Pieces\Madman.cs" />

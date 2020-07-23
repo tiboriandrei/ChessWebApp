@@ -10,15 +10,27 @@ namespace ChessClassLibrary
     {
         public ChessPiece Piece { get; set; }
         public bool Occupied { get; set; }
+        public int CoordX { get; set; }
+        public int CoordY { get; set; }
 
-        public Spot()
+        public Spot(int i, int j)
         {
             Piece = null;
             Occupied = false;
+            CoordX = i;
+            CoordY = j;
         }
 
         public Spot(ChessPiece piece, bool occupied)
         {
+            Piece = piece;
+            Occupied = occupied;
+        }
+
+        public Spot(int i, int j, ChessPiece piece, bool occupied)
+        {
+            CoordX = i;
+            CoordY = j;
             Piece = piece;
             Occupied = occupied;
         }

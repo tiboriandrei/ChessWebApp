@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1169
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessWebApp", "ChessWebApp\ChessWebApp.csproj", "{6D9E60F7-2DB6-47C2-9D43-D537064BD672}"
 EndProject
@@ -10,6 +10,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4D8EBE97-FC8B-43D0-9783-4DF1FA3A3BC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessTest1", "Tests\ChessTest1\ChessTest1.csproj", "{67470DA6-F917-43A2-8BA2-7CBA8C209791}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{23B44943-AE9D-4431-883E-A22C305D591E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameRepository.Interface", "ClassLibrary1\ChessGameRepository.Interface.csproj", "{9336E8E0-8080-4EDA-A688-35AE97FACE5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameRepo.Services", "ChessGameRepo.Services\ChessGameRepo.Services.csproj", "{A54B4F12-B0D8-4F51-888F-6A916E7DF240}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{2F579B06-C718-43FA-8109-50D8D8B79BBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +37,26 @@ Global
 		{67470DA6-F917-43A2-8BA2-7CBA8C209791}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67470DA6-F917-43A2-8BA2-7CBA8C209791}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67470DA6-F917-43A2-8BA2-7CBA8C209791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9336E8E0-8080-4EDA-A688-35AE97FACE5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9336E8E0-8080-4EDA-A688-35AE97FACE5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9336E8E0-8080-4EDA-A688-35AE97FACE5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9336E8E0-8080-4EDA-A688-35AE97FACE5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A54B4F12-B0D8-4F51-888F-6A916E7DF240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A54B4F12-B0D8-4F51-888F-6A916E7DF240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A54B4F12-B0D8-4F51-888F-6A916E7DF240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A54B4F12-B0D8-4F51-888F-6A916E7DF240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F579B06-C718-43FA-8109-50D8D8B79BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F579B06-C718-43FA-8109-50D8D8B79BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F579B06-C718-43FA-8109-50D8D8B79BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F579B06-C718-43FA-8109-50D8D8B79BBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{67470DA6-F917-43A2-8BA2-7CBA8C209791} = {4D8EBE97-FC8B-43D0-9783-4DF1FA3A3BC9}
+		{9336E8E0-8080-4EDA-A688-35AE97FACE5D} = {23B44943-AE9D-4431-883E-A22C305D591E}
+		{A54B4F12-B0D8-4F51-888F-6A916E7DF240} = {23B44943-AE9D-4431-883E-A22C305D591E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C54D733-3BED-4F7A-80B1-DAD60F63F020}

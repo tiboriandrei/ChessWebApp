@@ -12,14 +12,14 @@ namespace ChessClassLibrary.Pieces
         {
         }
 
-        public override void Display()
+        public override bool TryMove(Table table, Spot origin, Spot dest, string player)
         {
             throw new NotImplementedException();
         }
 
-        public override bool TryMove(int destColumn, int destRow, string player)
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return this.PieceColour.ToString() + "King";
         }
     }
 }
