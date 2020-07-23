@@ -15,6 +15,7 @@ to-do: saving players and game data to Database using Entity Framework
 
 
 v2. 
+    
     Chess class structure ready. Pawn movement logic implemented. todo other pieces' logic
 
     EntityFramework integrated. Working functions atm: AddGame, RestoreGame, AddPlayers, GetPlayers. todo: updateGame after everyMove if move is legal 
