@@ -79,6 +79,7 @@ namespace ChessWebApp.Controllers
                 if (goodMove)
                 {
                     //updategame
+                    //
                 }
 
                 return Json(goodMove); 
