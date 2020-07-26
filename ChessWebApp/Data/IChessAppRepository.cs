@@ -1,4 +1,5 @@
 ﻿using ChessClassLibrary;
+using ChessWebApp.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace ChessWebApp.Data
 
         Game GetGameByID(int id);
 
+        GameStateForJS[] LoadGameState(int id);
+
         void AddGame(Game newGame);
 
-        void UpdateGameByID(int id, Game updatedGame);
+        void UpdateGame(int id, int originColumn, int originRow, int destColumn, int destRow, string player, string piece);
 
         void DeteleGameByID(int id);
 

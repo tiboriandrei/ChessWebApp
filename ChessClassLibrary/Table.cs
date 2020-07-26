@@ -94,8 +94,6 @@ namespace ChessClassLibrary
 
         public bool MovePiece(string piece, int originColumn, int originRow, int destColumn, int destRow, string player) {
 
-            //Table[originRow, originColumn].Piece.TryMove(destRow, destColumn, player);
-
             return true;
         }
 

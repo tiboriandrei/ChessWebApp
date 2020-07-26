@@ -1,7 +1,6 @@
 ﻿
 @{
     ViewData["Title"] = "ChessGame";
-
 }
 
 <html>
@@ -12,108 +11,127 @@
 
     <link runat="server" rel="stylesheet" href="~/css/site.css" />
 
-    <div id="board">
-        <div row="8" column="1" class="square-grey" player="white" piece="rook"></div>
-        <div row="8" column="2" class="square" player="white" piece="horse"></div>
-        <div row="8" column="3" class="square-grey" player="white" piece="bishop"></div>
-        <div row="8" column="4" class="square" player="white" piece="queen"></div>
-        <div row="8" column="5" class="square-grey" player="white" piece="king"></div>
-        <div row="8" column="6" class="square" player="white" piece="bishop"></div>
-        <div row="8" column="7" class="square-grey" player="white" piece="horse"></div>
-        <div row="8" column="8" class="square" player="white" piece="rook"></div>
-        <br />
+        <div> <p id="playerturn">Player turn : White</p></div>
 
-        <div row="7" column="1" class="square" player="white" piece="pawn"></div>
-        <div row="7" column="2" class="square-grey" player="white" piece="pawn"></div>
-        <div row="7" column="3" class="square" player="white" piece="pawn"></div>
-        <div row="7" column="4" class="square-grey" player="white" piece="pawn"></div>
-        <div row="7" column="5" class="square" player="white" piece="pawn"></div>
-        <div row="7" column="6" class="square-grey" player="white" piece="pawn"></div>
-        <div row="7" column="7" class="square" player="white" piece="pawn"></div>
-        <div row="7" column="8" class="square-grey" player="white" piece="pawn"></div>
-        <br />
+        <div id="board">
+            <div row="8" column="1" class="square-grey" player="White" piece="Rook"></div>
+            <div row="8" column="2" class="square" player="White" piece="Horseman"></div>
+            <div row="8" column="3" class="square-grey" player="White" piece="Madman"></div>
+            <div row="8" column="4" class="square" player="White" piece="Queen"></div>
+            <div row="8" column="5" class="square-grey" player="White" piece="King"></div>
+            <div row="8" column="6" class="square" player="White" piece="Madman"></div>
+            <div row="8" column="7" class="square-grey" player="White" piece="Horseman"></div>
+            <div row="8" column="8" class="square" player="White" piece="Rook"></div>
+            <br />
 
-        <div row="6" column="1" class="square-grey" player="" piece=""></div>
-        <div row="6" column="2" class="square" player="" piece=""></div>
-        <div row="6" column="3" class="square-grey" player="" piece=""></div>
-        <div row="6" column="4" class="square" player="" piece=""></div>
-        <div row="6" column="5" class="square-grey" player="" piece=""></div>
-        <div row="6" column="6" class="square" player="" piece=""></div>
-        <div row="6" column="7" class="square-grey" player="" piece=""></div>
-        <div row="6" column="8" class="square" player="" piece=""></div>
-        <br />
+            <div row="7" column="1" class="square" player="White" piece="Pawn"></div>
+            <div row="7" column="2" class="square-grey" player="White" piece="Pawn"></div>
+            <div row="7" column="3" class="square" player="White" piece="Pawn"></div>
+            <div row="7" column="4" class="square-grey" player="White" piece="Pawn"></div>
+            <div row="7" column="5" class="square" player="White" piece="Pawn"></div>
+            <div row="7" column="6" class="square-grey" player="White" piece="Pawn"></div>
+            <div row="7" column="7" class="square" player="White" piece="Pawn"></div>
+            <div row="7" column="8" class="square-grey" player="White" piece="Pawn"></div>
+            <br />
 
-        <div row="5" column="1" class="square" player="" piece=""></div>
-        <div row="5" column="2" class="square-grey" player="" piece=""></div>
-        <div row="5" column="3" class="square" player="" piece=""></div>
-        <div row="5" column="4" class="square-grey" player="" piece=""></div>
-        <div row="5" column="5" class="square" player="" piece=""></div>
-        <div row="5" column="6" class="square-grey" player="" piece=""></div>
-        <div row="5" column="7" class="square" player="" piece=""></div>
-        <div row="5" column="8" class="square-grey" player="" piece=""></div>
-        <br />
+            <div row="6" column="1" class="square-grey" player="" piece=""></div>
+            <div row="6" column="2" class="square" player="" piece=""></div>
+            <div row="6" column="3" class="square-grey" player="" piece=""></div>
+            <div row="6" column="4" class="square" player="" piece=""></div>
+            <div row="6" column="5" class="square-grey" player="" piece=""></div>
+            <div row="6" column="6" class="square" player="" piece=""></div>
+            <div row="6" column="7" class="square-grey" player="" piece=""></div>
+            <div row="6" column="8" class="square" player="" piece=""></div>
+            <br />
 
-        <div row="4" column="1" class="square-grey" player="" piece=""></div>
-        <div row="4" column="2" class="square" player="" piece=""></div>
-        <div row="4" column="3" class="square-grey" player="" piece=""></div>
-        <div row="4" column="4" class="square" player="" piece=""></div>
-        <div row="4" column="5" class="square-grey" player="" piece=""></div>
-        <div row="4" column="6" class="square" player="" piece=""></div>
-        <div row="4" column="7" class="square-grey" player="" piece=""></div>
-        <div row="4" column="8" class="square" player="" piece=""></div>
-        <br />
+            <div row="5" column="1" class="square" player="" piece=""></div>
+            <div row="5" column="2" class="square-grey" player="" piece=""></div>
+            <div row="5" column="3" class="square" player="" piece=""></div>
+            <div row="5" column="4" class="square-grey" player="" piece=""></div>
+            <div row="5" column="5" class="square" player="" piece=""></div>
+            <div row="5" column="6" class="square-grey" player="" piece=""></div>
+            <div row="5" column="7" class="square" player="" piece=""></div>
+            <div row="5" column="8" class="square-grey" player="" piece=""></div>
+            <br />
 
-        <div row="3" column="1" class="square" player="" piece=""></div>
-        <div row="3" column="2" class="square-grey" player="" piece=""></div>
-        <div row="3" column="3" class="square" player="" piece=""></div>
-        <div row="3" column="4" class="square-grey" player="" piece=""></div>
-        <div row="3" column="5" class="square" player="" piece=""></div>
-        <div row="3" column="6" class="square-grey" player="" piece=""></div>
-        <div row="3" column="7" class="square" player="" piece=""></div>
-        <div row="3" column="8" class="square-grey" player="" piece=""></div>
-        <br />
+            <div row="4" column="1" class="square-grey" player="" piece=""></div>
+            <div row="4" column="2" class="square" player="" piece=""></div>
+            <div row="4" column="3" class="square-grey" player="" piece=""></div>
+            <div row="4" column="4" class="square" player="" piece=""></div>
+            <div row="4" column="5" class="square-grey" player="" piece=""></div>
+            <div row="4" column="6" class="square" player="" piece=""></div>
+            <div row="4" column="7" class="square-grey" player="" piece=""></div>
+            <div row="4" column="8" class="square" player="" piece=""></div>
+            <br />
 
-        <div row="2" column="1" class="square-grey" player="black" piece="pawn"></div>
-        <div row="2" column="2" class="square" player="black" piece="pawn"></div>
-        <div row="2" column="3" class="square-grey" player="black" piece="pawn"></div>
-        <div row="2" column="4" class="square" player="black" piece="pawn"></div>
-        <div row="2" column="5" class="square-grey" player="black" piece="pawn"></div>
-        <div row="2" column="6" class="square" player="black" piece="pawn"></div>
-        <div row="2" column="7" class="square-grey" player="black" piece="pawn"></div>
-        <div row="2" column="8" class="square" player="black" piece="pawn"></div>
-        <br />
+            <div row="3" column="1" class="square" player="" piece=""></div>
+            <div row="3" column="2" class="square-grey" player="" piece=""></div>
+            <div row="3" column="3" class="square" player="" piece=""></div>
+            <div row="3" column="4" class="square-grey" player="" piece=""></div>
+            <div row="3" column="5" class="square" player="" piece=""></div>
+            <div row="3" column="6" class="square-grey" player="" piece=""></div>
+            <div row="3" column="7" class="square" player="" piece=""></div>
+            <div row="3" column="8" class="square-grey" player="" piece=""></div>
+            <br />
 
-        <div row="1" column="1" class="square" player="black" piece="rook"></div>
-        <div row="1" column="2" class="square-grey" player="black" piece="horse"></div>
-        <div row="1" column="3" class="square" player="black" piece="bishop"></div>
-        <div row="1" column="4" class="square-grey" player="black" piece="queen"></div>
-        <div row="1" column="5" class="square" player="black" piece="king"></div>
-        <div row="1" column="6" class="square-grey" player="black" piece="bishop"></div>
-        <div row="1" column="7" class="square" player="black" piece="horse"></div>
-        <div row="1" column="8" class="square-grey" player="black" piece="rook"></div>
-        <br />
+            <div row="2" column="1" class="square-grey" player="Black" piece="Pawn"></div>
+            <div row="2" column="2" class="square" player="Black" piece="Pawn"></div>
+            <div row="2" column="3" class="square-grey" player="Black" piece="Pawn"></div>
+            <div row="2" column="4" class="square" player="Black" piece="Pawn"></div>
+            <div row="2" column="5" class="square-grey" player="Black" piece="Pawn"></div>
+            <div row="2" column="6" class="square" player="Black" piece="Pawn"></div>
+            <div row="2" column="7" class="square-grey" player="Black" piece="Pawn"></div>
+            <div row="2" column="8" class="square" player="Black" piece="Pawn"></div>
+            <br />
 
-    </div>
+            <div row="1" column="1" class="square" player="Black" piece="Rook"></div>
+            <div row="1" column="2" class="square-grey" player="Black" piece="Horseman"></div>
+            <div row="1" column="3" class="square" player="Black" piece="Madman"></div>
+            <div row="1" column="4" class="square-grey" player="Black" piece="Queen"></div>
+            <div row="1" column="5" class="square" player="Black" piece="King"></div>
+            <div row="1" column="6" class="square-grey" player="Black" piece="Madman"></div>
+            <div row="1" column="7" class="square" player="Black" piece="Horseman"></div>
+            <div row="1" column="8" class="square-grey" player="Black" piece="Rook"></div>
+            <br />
+
+        </div>
 
 </body>
 
 </html>
 @section Scripts {
     <script>
-
         $(document).ready(function () {
 
+            var obj;
+
+            console.log("loading game");
+            $.ajax({
+                type: "GET",
+                url: "/Home/LoadGameState",
+                dataType: "json",
+                async: false,
+                success: function (response) {                  
+                    console.log("game loaded");
+                    obj = jQuery.parseJSON(response);            
+                }
+            });
+
             var selection = { piece: '', player: '', row: '', column: '' },
-                playerturn = 'white',
-                whiteSelectedPiece = 'no',
-                blackSelectedPiece = 'no';
+                playerturn = 'White',
+                WhiteSelectedPiece = 'no',
+                BlackSelectedPiece = 'no';
             var originColumn,
                 originRow,
                 destColumn,
                 destRow,
                 piece;
-                                   
+
+            var index = 0;            
             $("[piece]").each(function () {
+              
+                $(this).attr('piece', obj[index].Piece).attr('player', obj[index].Color);
+                index++;
 
                 let player = $(this).attr('player'),
                     piece = $(this).attr('piece'),
@@ -126,7 +144,7 @@
 
             $("[piece]").on("click", function () {
 
-                if (whiteSelectedPiece != 'no' && playerturn == 'white') {
+                if (WhiteSelectedPiece != 'no' && playerturn == 'White') {
                     destColumn = $(this).attr('column');
                     destRow = $(this).attr('row');                    
 
@@ -142,7 +160,7 @@
                             "destColumn": destColumn,
                             "destRow": destRow,
                             "player": playerturn,
-                            "piece": whiteSelectedPiece
+                            "piece": WhiteSelectedPiece
                         },
                         success: function (data) {                            
                             console.log(data);
@@ -163,11 +181,13 @@
 
                                 //add (move) piece
                                 $("[column='" + destColumn + "'][row='" + destRow + "']")
-                                    .css("background", "url(/images/" + playerturn + whiteSelectedPiece + ".png)")
-                                    .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
+                                    .css("background", "url(/images/" + playerturn + WhiteSelectedPiece + ".png)")
+                                    .css("background-size", "75px 75px").css('background-color', dest_bgcolor)
+                                    .attr('piece', WhiteSelectedPiece).attr('player', playerturn);;
 
-                                whiteSelectedPiece = 'no';
-                                playerturn = 'black';  //maybe make server coordonate
+                                WhiteSelectedPiece = 'no';
+                                playerturn = 'Black';  
+                                document.getElementById('playerturn').innerHTML = "Player turn : Black";
                             }
                             else {
                                 alert("Illegal move. Try again.");
@@ -181,7 +201,7 @@
                     $.ajax(option);
                 }
 
-                if (blackSelectedPiece != 'no' && playerturn == 'black') {
+                if (BlackSelectedPiece != 'no' && playerturn == 'Black') {
                     var destColumn = $(this).attr('column');
                     var destRow = $(this).attr('row');
 
@@ -197,7 +217,7 @@
                             "destColumn": destColumn,
                             "destRow": destRow,
                             "player": playerturn,
-                            "piece": blackSelectedPiece
+                            "piece": BlackSelectedPiece
                         },
                         success: function (data) {                            
                             console.log(data);
@@ -216,13 +236,16 @@
                                     .css('background-color', bgcolor).attr('piece', '').attr('player', '');
 
                                 var dest_bgcolor = $("[column='" + destColumn + "'][row='" + destRow + "']").css('background-color');
+
                                 //add (move) piece
                                 $("[column='" + destColumn + "'][row='" + destRow + "']")
-                                    .css("background", "url(/images/" + playerturn + blackSelectedPiece + ".png)")
-                                    .css("background-size", "75px 75px").css('background-color', dest_bgcolor);
+                                    .css("background", "url(/images/" + playerturn + BlackSelectedPiece + ".png)")
+                                    .css("background-size", "75px 75px").css('background-color', dest_bgcolor)
+                                    .attr('piece', BlackSelectedPiece).attr('player', playerturn);
 
-                                blackSelectedPiece = 'no';
-                                playerturn = 'white';
+                                BlackSelectedPiece = 'no';
+                                playerturn = 'White';
+                                document.getElementById('playerturn').innerHTML = "Player turn : White";
                             }
                             else {
                                 alert("Illegal move. Try again.");
@@ -239,29 +262,18 @@
 
             $("[piece]").on("click", function () {
                
-                if (playerturn == 'white' && $(this).attr('player') == 'white') {
-                    console.log(playerturn);
-
+                if (playerturn == 'White' && $(this).attr('player') == 'White') {
                     originColumn = $(this).attr('column');
                     originRow = $(this).attr('row');
-                    whiteSelectedPiece = $(this).attr('piece');                   
+                    WhiteSelectedPiece = $(this).attr('piece');                     
                 }
 
-                if (playerturn == 'black' && $(this).attr('player') == 'black') {
-                    console.log(playerturn);
-
+                if (playerturn == 'Black' && $(this).attr('player') == 'Black') {                    
                     originColumn = $(this).attr('column');
                     originRow = $(this).attr('row');
-                    blackSelectedPiece = $(this).attr('piece');
+                    BlackSelectedPiece = $(this).attr('piece');                    
                 }
             })
-
-            
-
         });
-
-        
-
-
     </script>
 }

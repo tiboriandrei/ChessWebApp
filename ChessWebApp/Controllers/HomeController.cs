@@ -8,6 +8,7 @@ using ChessWebApp.Models;
 using ChessClassLibrary;
 using Newtonsoft.Json;
 using ChessWebApp.Data;
+using ChessWebApp.Data.Entities;
 
 namespace ChessWebApp.Controllers
 {
@@ -56,8 +57,9 @@ namespace ChessWebApp.Controllers
             Player player2 = _repository.GetPlayerByID(11);
 
             Game chessGame = new Game(player1, player2);
+
             //_repository.AddGame(chessGame);
-            //Game returnedGame = _repository.GetGameByID(7);
+            
             return View("ChessGame");
         }
 
@@ -66,62 +68,36 @@ namespace ChessWebApp.Controllers
             return View();
         }
 
+        public static int hardcodedGetGameID = 28;
+
         [HttpPost]
         public JsonResult Move(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
         {
-            Console.WriteLine();
-
             try
             {
-                Game returnedGame = _repository.GetGameByID(13);
+                Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
                 bool goodMove = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
 
                 if (goodMove)
                 {
-                    //updategame
-                    //
+                    _repository.UpdateGame(hardcodedGetGameID, originColumn - 1, originRow - 1, destColumn - 1, destRow - 1, player, piece);                    
                 }
-
+                
                 return Json(goodMove); 
             }
             catch (Exception ex)
             {
                 return Json("bad move");
             }
-
         }
 
+        [HttpGet]
+        public JsonResult LoadGameState()
+        {
+            GameStateForJS[] gameState = _repository.LoadGameState(hardcodedGetGameID);
+            string output = JsonConvert.SerializeObject(gameState);
 
-
-
-
-
-
-
-
-
-
-
-        //[HttpPost]        
-        //public IActionResult TryMove2(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
-        //{
-        //   // chessGame.MovePiece(piece, originColumn, originRow, destColumn, destRow, player);
-        //    return View();
-        //}
-
-        ////private readonly IGameRepository gameRepository;
-
-        //public IActionResult TryMove(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
-        //{
-
-        //    Game chessGame = new Game();
-        //    //get game form db, save it whatever           
-
-        //    bool result = chessGame.MovePiece(piece, originColumn, originRow, destColumn, destRow, player);
-        //    //return Json(result);
-        //    return View();
-        //}
-
-
+            return Json(output);
+        }
     }
 }

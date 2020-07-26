@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace ChessWebApp.Data
 {
     public class ChessAppRepository : IChessAppRepository
@@ -22,11 +23,9 @@ namespace ChessWebApp.Data
             //converting ChessClassLibrary.Game to ChessWebApp.Data.Entities.ChessGame
 
             ChessGame game = new ChessGame();
-            //game.Player1 = new ChessPlayer(newGame.Player1.Name, newGame.Player1.NrOfWins, newGame.Player1.NrOfLosses, newGame.Player1.NrOfDraws, newGame.Player1.Stats);
-           // game.Player2 = new ChessPlayer(newGame.Player2.Name, newGame.Player2.NrOfWins, newGame.Player2.NrOfLosses, newGame.Player2.NrOfDraws, newGame.Player2.Stats);
 
-            ChessPlayer p1 = _ctx.Players.Find(10);         //id player1
-            ChessPlayer p2 = _ctx.Players.Find(11);         //id player2 
+            ChessPlayer p1 = _ctx.Players.Find(10);         //id player1 (temporarily hardcoded)
+            ChessPlayer p2 = _ctx.Players.Find(11);         //id player2 (temporarily hardcoded)
 
             _ctx.Players.Attach(p1);
             _ctx.Players.Attach(p2);
@@ -45,10 +44,11 @@ namespace ChessWebApp.Data
                 {
                     if (newGame.Table.Spots[i, j].Occupied)
                     {
-                        piece = newGame.Table.Spots[i, j].Piece.ToString();
+                        piece = newGame.Table.Spots[i, j].Piece.ToString();                        
                     }
                     
                     ChessSpot spot = new ChessSpot(piece, newGame.Table.Spots[i, j].Occupied, newGame.Table.Spots[i, j].CoordX, newGame.Table.Spots[i, j].CoordY);
+                    piece = "";
                     table.Spots.Add(spot);
                 }
             }
@@ -155,8 +155,7 @@ namespace ChessWebApp.Data
                 {
                     Player p = new Player(player.Name, player.NrOfWins, player.NrOfLosses, player.NrOfDraws);
                     playerList.Add(p);
-                }
-                          
+                }                          
             }
             return playerList.First();
         }
@@ -172,19 +171,94 @@ namespace ChessWebApp.Data
             return playerList;            
         }
 
+        public GameStateForJS[] LoadGameState(int id)
+        {
+            var result = _ctx.Games.Include(d => d.GameState.Spots).Where(d => d.Id == id).FirstOrDefault();
+
+            string color = "";
+            string type = "";
+
+            //List<GameStateForJS> list = new List<GameStateForJS>();
+
+            GameStateForJS[,] array = new GameStateForJS[8,8];
+            GameStateForJS[] array1D = new GameStateForJS[64];
+
+            foreach (var item in result.GameState.Spots)
+            {
+                if (item.Piece != "" && item.Piece != null)
+                {
+                    char[] chArr = item.Piece.ToCharArray();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        color += chArr[i];
+                    }
+
+                    for (int i = 5; i < item.Piece.Length; i++)
+                    {
+                        type += chArr[i];
+                    }
+                }
+
+                if (item.Piece == "" || item.Piece == null) {
+                    color = type = "n";
+                }
+                
+                GameStateForJS obj = new GameStateForJS(type, color, item.CoordX, item.CoordY);
+
+                array[7 - obj.CoordY, obj.CoordX] = obj;
+
+                int index = 0;
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        array1D[index] = array[i, j];
+                        index++;
+                    }
+                }
+                type = color = "";
+                
+            }
+
+            return array1D;
+        }
+
         public bool SaveAll()
         {
             return _ctx.SaveChanges() > 0;
         }
 
-        public void UpdateGameByID(int id, Game updatedGame)
+        public void UpdateGame(int id, int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
         {
-            throw new NotImplementedException();
+            var result = _ctx.Games.Include(d => d.GameState.Spots).Where(d => d.Id == id).FirstOrDefault();
+                        
+                foreach (var item in result.GameState.Spots)                        //to-do: change List<ChessSpots> with a Dictionary<key, ChessSpot> 
+                {                                                                       //where string key = originColumn + originRow, to avoid all this iterating
+                    if (item.CoordX == originColumn && item.CoordY == originRow)                            //(if entity framework supports dictionary) 
+                    {
+                        item.Piece = "";
+                        item.Occupied = false;
+                        _ctx.Entry(item).State = EntityState.Modified;
+                    }
+
+                    if (item.CoordX == destColumn && item.CoordY == destRow)                           
+                    {
+                        item.Piece = player + piece;
+                        item.Occupied = true;
+                        _ctx.Entry(item).State = EntityState.Modified;
+                         //to-do: add removed piece to history 
+                    }
+                }
+
+            _ctx.Entry(result).State = EntityState.Modified;
+
+            _ctx.SaveChanges();
         }
 
         public void UpdatePlayerByID(int id, Player updatedPlayerData)
         {
             throw new NotImplementedException();
         }
+
     }
 }

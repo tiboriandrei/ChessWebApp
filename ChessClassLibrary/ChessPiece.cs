@@ -38,7 +38,6 @@ namespace ChessClassLibrary
             return this.PieceState == PieceStateOption.Captured;
         }
 
-        public abstract bool TryMove(Table table, Spot origin, Spot dest, string player);
-               
+        public abstract bool TryMove(Table table, Spot origin, Spot dest, string player);               
     }
 }

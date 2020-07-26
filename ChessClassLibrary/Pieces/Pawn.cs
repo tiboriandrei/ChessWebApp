@@ -16,8 +16,7 @@ namespace ChessClassLibrary.Pieces
 
         public override bool TryMove(Table table, Spot origin, Spot dest, string player)
         {
-
-            if (player == "white")
+            if (player == "White")
             {
                 if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
                 {
@@ -51,7 +50,7 @@ namespace ChessClassLibrary.Pieces
                 }
             }
 
-            else if(player == "black") {
+            else if(player == "Black") {
 
                 if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
                 {
