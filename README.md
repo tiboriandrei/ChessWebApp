@@ -35,6 +35,7 @@ v3.
 -Fully working user interface & calls to server. 
 
 to-do: 
+
        ! implement King, Queen, Madman, Horseman, Rook logic. 
        *implement flipTable in ChessClassLibrary in Game.cs to simplify the code in the Piece.TryMove methods
        *implement login functionality, user tracking, spectator mode for lvie games etc
