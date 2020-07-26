@@ -1,8 +1,5 @@
 # ChessWebApp
 
-start: 14.07.2020
-
-
 v1
 -Working initial ui interface (javascript, jQuery, CSS, HTML5) ✓  ...bootstrap later
 -Chess game class structure C# .. underway
