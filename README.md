@@ -17,8 +17,11 @@ to-do:
 
 
 v2.
+
 -Chess class structure ready. Pawn movement logic implemented. todo other pieces' logic
+
 -EntityFramework integrated. Working functions atm: AddGame, RestoreGame, AddPlayers, GetPlayers. todo: updateGame after everyMove if move is legal 
+
 -Mapping from Entity.ChessGame to ClassLibrary.Game and vice versa
     
               
