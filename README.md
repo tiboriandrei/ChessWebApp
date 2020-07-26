@@ -24,10 +24,14 @@ v2.
 
 -Mapping from Entity.ChessGame to ClassLibrary.Game and vice versa
     
-              
+         
+         
+         
        
 v3. 
+
 -The chess table in the database gets updated after every legal move. On page refresh/closign and running app again, the saved gamestate gets loaded into the javascript code and the backend code, to be able to fully resume an old or paused game.
+
 -Fully working user interface & calls to server. 
 
 to-do: 
