@@ -58,7 +58,7 @@ namespace ChessWebApp.Controllers
 
             Game chessGame = new Game(player1, player2);
 
-            //_repository.AddGame(chessGame);
+            _repository.AddGame(chessGame);
             
             return View("ChessGame");
         }
@@ -68,7 +68,7 @@ namespace ChessWebApp.Controllers
             return View();
         }
 
-        public static int hardcodedGetGameID = 28;
+        public static int hardcodedGetGameID = 29;
 
         [HttpPost]
         public JsonResult Move(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)

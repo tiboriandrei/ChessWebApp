@@ -14,7 +14,25 @@ namespace ChessClassLibrary.Pieces
 
         public override bool TryMove(Table table, Spot origin, Spot dest, string player)
         {
-            throw new NotImplementedException();
+            if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
+            {
+                if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
+                {
+                    return false;
+                }
+            }
+
+            if (Math.Abs(dest.CoordX - origin.CoordX) == 1 && Math.Abs(dest.CoordY - origin.CoordY) == 2)
+            {
+                return true;
+            }
+
+            if (Math.Abs(dest.CoordX - origin.CoordX) == 2 && Math.Abs(dest.CoordY - origin.CoordY) == 1)
+            {
+                return true;                                                                                                          //(saved horse implementation for last, i thought it would be most difficult piece to implement lol...)
+            }
+
+            return false;
         }
 
         public override string ToString()

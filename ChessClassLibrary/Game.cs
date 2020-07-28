@@ -28,25 +28,25 @@ namespace ChessClassLibrary
 
         public bool MovePiece(string piece, int originX, int originY, int destX, int destY, string player)
         {
-            //if (player == "Black")
-            //{
-            //    originX = 7 - originX;
-            //    originY = 7 - originY;
-            //    destX = 7 - destX;
-            //    destY = 7 - destY;
-            //    this.Table = flipTable(this.Table);
-            //}
+            if (player == "Black")
+            {
+                originX = 7 - originX;
+                originY = 7 - originY;
+                destX = 7 - destX;
+                destY = 7 - destY;
+                this.Table = flipTable(this.Table);
+            }
 
             var origin = new Spot(originX, originY);
             var dest = new Spot(destX, destY);
 
             bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, player);
 
-            //if (player == "Black")
-            //{
-            //    this.Table = flipTable(this.Table);
-            //}
-            
+            if (player == "Black")
+            {
+                this.Table = flipTable(this.Table);
+            }
+
             return goodMove;
         }
 
@@ -59,7 +59,10 @@ namespace ChessClassLibrary
             {
                 for (int j = 0; j < 8; j++)
                 {                    
-                    flippedTable.Spots[i, j] = table.Spots[i, 7 - j];
+                    flippedTable.Spots[i, j] = table.Spots[7 - i, 7 - j];
+                    flippedTable.Spots[i, j].CoordX = 7 - i;
+                    flippedTable.Spots[i, j].CoordY = 7 - j;
+
                 }
             }
             return flippedTable;

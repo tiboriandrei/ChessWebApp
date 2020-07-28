@@ -13,78 +13,43 @@ namespace ChessClassLibrary.Pieces
         }
 
         //stanga jos 1,1   x = row , y = column
+        //move forward means CoordY minus distance
+        //move to the right means CoordX + distance
 
         public override bool TryMove(Table table, Spot origin, Spot dest, string player)
         {
-            if (player == "White")
-            {
                 if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
                 {
                     if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
                     {
                         return false;
                     }
-
-                    if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour.ToString() == "Black")
+                    
+                    if ( ((dest.CoordX == origin.CoordX - 1) || (dest.CoordX == origin.CoordX + 1)) && (Math.Abs(dest.CoordY - origin.CoordY) == 1))
                     {
-                        if ( ((dest.CoordX == origin.CoordX - 1) || (dest.CoordX == origin.CoordX + 1)) && (Math.Abs(dest.CoordY - origin.CoordY) == 1))
-                        {
-                            return true;
-                        }
+                         return true; //capture enemy piece
+                    }
 
-                        return false;
-                    }                    
+                    return false;                                        
                 }
 
                 if (dest.CoordX != origin.CoordX)
                 {
-                    return false;
+                    return false; //can move only forward
                 }
-                else if ((Math.Abs(dest.CoordY - origin.CoordY) == 2) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false) && (table.Spots[dest.CoordX, Math.Abs(2 - origin.CoordY)].Occupied == false))
+                else if (origin.CoordY == 6 && (Math.Abs(dest.CoordY - origin.CoordY) == 2) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false) && (table.Spots[dest.CoordX, Math.Abs(2 - origin.CoordY)].Occupied == false))
                 {
-                    return true;
-                }
+                    return true;    //move 2 spots forward if origin.CoordY == 1 (first move)
+            }
                 else if ((Math.Abs(dest.CoordY - origin.CoordY) == 1) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false))
                 {
-                    return true;
-                }
-            }
-
-            else if(player == "Black") {
-
-                if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
-                {
-                    if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
+                    if (dest.CoordY == 7)
                     {
-                        return false;
+                        //to-do: promote piece, maybe use event & delegate to notify Game.cs
                     }
-
-                    if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour.ToString() == "White")
-                    {
-                        if (((dest.CoordX == origin.CoordX - 1) || (dest.CoordX == origin.CoordX + 1)) && (Math.Abs(dest.CoordY - origin.CoordY) == 1))
-                        {
-                            return true;
-                        }
-
-                        return false;
-                    }                   
+                    return true;    //move 1 spot forward
                 }
-
-                if (dest.CoordX != origin.CoordX)
-                {
-                    return false;
-                }
-                else if ((Math.Abs(dest.CoordY - origin.CoordY) == 2) && (table.Spots[dest.CoordX, Math.Abs(1 + origin.CoordY)].Occupied == false) && (table.Spots[dest.CoordX, Math.Abs(2 + origin.CoordY)].Occupied == false))
-                {
-                    return true;
-                }
-                else if ((Math.Abs(dest.CoordY - origin.CoordY) == 1) && (table.Spots[dest.CoordX, Math.Abs(1 + origin.CoordY)].Occupied == false))
-                {
-                    return true;
-                }
-            }
             
-
             return false;
         }
 

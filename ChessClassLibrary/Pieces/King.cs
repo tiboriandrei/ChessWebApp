@@ -14,7 +14,23 @@ namespace ChessClassLibrary.Pieces
 
         public override bool TryMove(Table table, Spot origin, Spot dest, string player)
         {
-            throw new NotImplementedException();
+            if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
+            {
+                if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
+                {
+                    //if rook try castle
+                    return false;
+                }                
+            }
+
+            if ( (dest.CoordX == origin.CoordX - 1 || dest.CoordX == origin.CoordX - 1) || (dest.CoordY == origin.CoordY - 1 || dest.CoordY == origin.CoordY + 1))
+            {
+                //IF DEST = INCHECK, return false;
+                return true;
+            }
+            
+
+            return false;
         }
 
         public override string ToString()
