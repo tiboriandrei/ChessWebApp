@@ -80,7 +80,7 @@ namespace ChessClassLibrary
             Spots[4, 7].Piece = new Queen(true);
             Spots[4, 7].Occupied = true;
         }
-
+        //
         public Table(List<Spot> list) {
 
             this.Spots = new Spot[8, 8];
