@@ -13,12 +13,19 @@ namespace ChessClassLibrary
         public int CoordX { get; set; }
         public int CoordY { get; set; }
 
+        public bool NotSafeForWK { get; set; }
+        public bool NotSafeForBK { get; set; }
+       
+
         public Spot(int i, int j)
         {
             Piece = null;
             Occupied = false;
             CoordX = i;
             CoordY = j;
+            
+            NotSafeForWK = false;
+            NotSafeForBK = false;
         }
 
         public Spot(ChessPiece piece, bool occupied)

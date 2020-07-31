@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChessWebApp.Data
 {
-    public interface IChessAppRepository
+    public interface IChessAppRepository 
     {
         IEnumerable<Game> GetGames();
 
@@ -21,6 +21,8 @@ namespace ChessWebApp.Data
 
         void DeteleGameByID(int id);
 
+
+
         IEnumerable<Player> GetPlayers();
 
         Player GetPlayerByID(int id);
@@ -30,7 +32,5 @@ namespace ChessWebApp.Data
         void UpdatePlayerByID(int id, Player updatedPlayerData);
 
         void DetelePlayerByID(int id);
-
-        bool SaveAll();
     }
 }

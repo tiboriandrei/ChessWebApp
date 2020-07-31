@@ -39,5 +39,6 @@ namespace ChessClassLibrary
         }
 
         public abstract bool TryMove(Table table, Spot origin, Spot dest, string player);               
+        public abstract Table MarkAttackedSpots(Table table, Spot origin, string player);               
     }
 }

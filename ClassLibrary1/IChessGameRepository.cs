@@ -16,16 +16,5 @@ namespace ChessGameRepository.Interface
         void UpdateGameByID(int id, Game updatedGame);
 
         void DeteleGameByID(int id);
-
-        IEnumerable<Player> GetPlayers();
-
-        Player GetPlayerByID(int id);
-
-        void AddPlayer(Player newPlayer);
-
-        void UpdatePlayerByID(int id, Player updatedPlayerData);
-
-        void DetelePlayerByID(int id);
-
     }
 }

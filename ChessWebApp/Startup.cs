@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChessClassLibrary;
-using ChessGameRepo.Services;
-using ChessGameRepository.Interface;
+
 using ChessWebApp.Data;
 using ChessWebApp.Data.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -54,9 +53,6 @@ namespace ChessWebApp
 
             services.AddScoped<IChessAppRepository, ChessAppRepository>();
             
-           
-            //services.AddDbContext<ApplicationDbContext>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

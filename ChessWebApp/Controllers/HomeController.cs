@@ -58,7 +58,7 @@ namespace ChessWebApp.Controllers
 
             Game chessGame = new Game(player1, player2);
 
-            _repository.AddGame(chessGame);
+            //_repository.AddGame(chessGame);
             
             return View("ChessGame");
         }
@@ -68,22 +68,23 @@ namespace ChessWebApp.Controllers
             return View();
         }
 
-        public static int hardcodedGetGameID = 29;
+        public static int hardcodedGetGameID = 35;        
 
         [HttpPost]
         public JsonResult Move(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
-        {
+        {            
             try
             {
                 Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
-                bool goodMove = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
+                //string moveResult = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
+                string moveResult = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
 
-                if (goodMove)
+                if (moveResult == "goodMove")
                 {
-                    _repository.UpdateGame(hardcodedGetGameID, originColumn - 1, originRow - 1, destColumn - 1, destRow - 1, player, piece);                    
+                    _repository.UpdateGame(hardcodedGetGameID, originColumn - 1, originRow - 1, destColumn - 1, destRow - 1, player, piece);
                 }
                 
-                return Json(goodMove); 
+                return Json(moveResult); 
             }
             catch (Exception ex)
             {

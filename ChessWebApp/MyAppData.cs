@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ChessWebApp.Data;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace ChessWebApp
 {
     public static class MyAppData
     {
-        public static IConfiguration Configuration;
+        public static IConfiguration Configuration;        
     }
 }

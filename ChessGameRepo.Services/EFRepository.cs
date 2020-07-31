@@ -4,10 +4,9 @@ using System.Text;
 using ChessClassLibrary;
 using ChessGameRepository.Interface;
 
-
 namespace ChessGameRepo.Services
 {
-    public class EFRepository : IChessGameRepository
+    public class EFRepository : IChessGameRepository, IChessPlayersRepository
     {
         //private readonly ChessContext _ctx;
 

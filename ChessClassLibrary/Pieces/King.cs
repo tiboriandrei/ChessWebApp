@@ -23,19 +23,122 @@ namespace ChessClassLibrary.Pieces
                 }                
             }
 
-            if ( (dest.CoordX == origin.CoordX - 1 || dest.CoordX == origin.CoordX - 1) || (dest.CoordY == origin.CoordY - 1 || dest.CoordY == origin.CoordY + 1))
+            if ( ((dest.CoordX == origin.CoordX - 1 || dest.CoordX == origin.CoordX + 1)) && ((dest.CoordY == origin.CoordY - 1 || dest.CoordY == origin.CoordY + 1)) ||
+                ((dest.CoordX == origin.CoordX - 1 || dest.CoordX == origin.CoordX + 1)) || ((dest.CoordY == origin.CoordY - 1 || dest.CoordY == origin.CoordY + 1)) )
             {
-                //IF DEST = INCHECK, return false;
+                //IF DEST = INCHECK, return false;                
                 return true;
-            }
-            
+            }            
 
             return false;
         }
 
+        
+
         public override string ToString()
         {
             return this.PieceColour.ToString() + "King";
+        }
+
+        public override Table MarkAttackedSpots(Table table, Spot origin, string player)
+        {
+            if (origin.CoordX - 1 >= 0 && origin.CoordY - 1 >= 0)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordX - 1 >= 0 && origin.CoordY + 1 <= 7)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX - 1, origin.CoordY + 1].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX - 1, origin.CoordY + 1].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordX + 1 <= 7 && origin.CoordY - 1 >= 0)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordX + 1 <= 7 && origin.CoordY + 1 <= 7)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX + 1, origin.CoordY + 1].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX + 1, origin.CoordY + 1].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordX + 1 <= 7)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX + 1, origin.CoordY].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX + 1, origin.CoordY].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordX - 1 >= 0)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX - 1, origin.CoordY].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX - 1, origin.CoordY].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordY + 1 <= 7)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX, origin.CoordY + 1].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX, origin.CoordY + 1].NotSafeForWK = true;
+                }
+            }
+
+            if (origin.CoordY - 1 >= 0)
+            {
+                if (player == "White")
+                {
+                    table.Spots[origin.CoordX, origin.CoordY - 1].NotSafeForBK = true;
+                }
+                else if (player == "Black")
+                {
+                    table.Spots[origin.CoordX, origin.CoordY - 1].NotSafeForWK = true;
+                }
+            }
+
+            return table;
         }
     }
 }

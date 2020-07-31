@@ -80,7 +80,7 @@ namespace ChessClassLibrary
             Spots[4, 7].Piece = new Queen(true);
             Spots[4, 7].Occupied = true;
         }
-        //
+        
         public Table(List<Spot> list) {
 
             this.Spots = new Spot[8, 8];
@@ -88,18 +88,7 @@ namespace ChessClassLibrary
             foreach (var spot in list)
             {
                 Spots[spot.CoordX, spot.CoordY] = spot; 
-            }
-            
-        }
-
-        public bool MovePiece(string piece, int originColumn, int originRow, int destColumn, int destRow, string player) {
-
-            return true;
-        }
-
-        public bool RemovePiece()
-        {
-            return true;
+            }            
         }
 
     }
