@@ -28,8 +28,6 @@ v2.
          
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-         
        
 v3. 
 
@@ -43,3 +41,9 @@ to-do:
        *implement flipTable in ChessClassLibrary in Game.cs to simplify the code in the Piece.TryMove methods
        *implement login functionality, user tracking, spectator mode for lvie games etc
        *other QoL improvements
+       
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+v4.
+       All pieces movement logic implemented except ability to castle for king. 
+       to-do: verify if king is in check after every move. 
