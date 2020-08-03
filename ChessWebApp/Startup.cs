@@ -51,8 +51,15 @@ namespace ChessWebApp
 
             services.AddTransient<ChessSeeder>();
 
-            services.AddScoped<IChessAppRepository, ChessAppRepository>();
-            
+            //services.AddScoped<IChessAppRepository, ChessAppRepository>();
+
+            services.AddScoped<ChessAppRepository>();
+
+            services.AddSingleton<IChessGameRepository>(s => s.GetService<ChessAppRepository>());
+
+            services.AddSingleton<IChessPlayersRepository>(s => s.GetService<ChessAppRepository>());
+
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -62,7 +69,6 @@ namespace ChessWebApp
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
                    
         }
 

@@ -35,11 +35,6 @@ namespace ChessClassLibrary.Pieces
             return false;
         }
 
-        public override string ToString()
-        {
-            return this.PieceColour.ToString() + "Horseman";
-        }
-
         public override Table MarkAttackedSpots(Table table, Spot origin, string player)
         {
             if (origin.CoordX - 1 >=0 && origin.CoordY - 2 >= 0)

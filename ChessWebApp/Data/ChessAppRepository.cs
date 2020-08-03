@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ChessWebApp.Data
 {
-    public class ChessAppRepository : IChessAppRepository
+    public class ChessAppRepository : IChessGameRepository, IChessPlayersRepository
     {
         private readonly ChessContext _ctx;
 
@@ -124,7 +124,6 @@ namespace ChessWebApp.Data
                                 case "Horseman": restoredPiece = new Horseman(pieceColor); break;
                                 case "Rook": restoredPiece = new Rook(pieceColor); break;
                                 case "": restoredPiece = null; break;
-
                             }
                         }
 

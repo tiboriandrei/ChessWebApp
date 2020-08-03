@@ -14,9 +14,9 @@ namespace ChessWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IChessAppRepository _repository;
+        private readonly ChessAppRepository _repository;
         
-        public HomeController(IChessAppRepository repository)
+        public HomeController(ChessAppRepository repository)
         {
             _repository = repository;
         }

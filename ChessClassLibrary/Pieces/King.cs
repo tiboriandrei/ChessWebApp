@@ -19,25 +19,48 @@ namespace ChessClassLibrary.Pieces
                 if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
                 {
                     //if rook try castle
+                    if (table.Spots[dest.CoordX, dest.CoordY].Piece.ToString() == "WhiteRook" && origin.CoordX == 3 && origin.CoordY == 7
+                        && ((dest.CoordX == 0 && dest.CoordY == 7) || (dest.CoordX == 7 && dest.CoordY == 7)))
+                    {
+                        if (dest.CoordX > origin.CoordX)
+                        {
+                            for (int i = 1; i < 4; i++)
+                            {
+                                if (table.Spots[dest.CoordX + 1, dest.CoordY].Occupied)
+                                {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+
+                        if (dest.CoordX < origin.CoordX)
+                        {
+                            for (int i = 1; i < 3; i++)
+                            {
+                                if (table.Spots[dest.CoordX - 1, dest.CoordY].Occupied)
+                                {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+
+                    }
                     return false;
                 }                
             }
 
-            if ( ((dest.CoordX == origin.CoordX - 1 || dest.CoordX == origin.CoordX + 1)) && ((dest.CoordY == origin.CoordY - 1 || dest.CoordY == origin.CoordY + 1)) ||
-                ((dest.CoordX == origin.CoordX - 1 || dest.CoordX == origin.CoordX + 1)) || ((dest.CoordY == origin.CoordY - 1 || dest.CoordY == origin.CoordY + 1)) )
-            {
-                //IF DEST = INCHECK, return false;                
+            if ( ((dest.CoordX == origin.CoordX - 1 && dest.CoordX == origin.CoordY - 1)) || ((dest.CoordY == origin.CoordX - 1 && dest.CoordY == origin.CoordY + 1)) ||
+                ((dest.CoordX == origin.CoordY + 1 && dest.CoordX == origin.CoordY - 1)) || ((dest.CoordX == origin.CoordY + 1 && dest.CoordX == origin.CoordY + 1)) ||
+
+                ((dest.CoordX == origin.CoordX - 1 && dest.CoordX == origin.CoordY)) || ((dest.CoordX == origin.CoordX + 1 && dest.CoordX == origin.CoordY)) ||
+                ((dest.CoordX == origin.CoordX && dest.CoordX == origin.CoordY - 1)) || ((dest.CoordX == origin.CoordX && dest.CoordX == origin.CoordY + 1)))
+            {               
                 return true;
             }            
 
             return false;
-        }
-
-        
-
-        public override string ToString()
-        {
-            return this.PieceColour.ToString() + "King";
         }
 
         public override Table MarkAttackedSpots(Table table, Spot origin, string player)
@@ -139,6 +162,13 @@ namespace ChessClassLibrary.Pieces
             }
 
             return table;
+        }
+
+        public bool IsCheckMated(Table table, Spot origin, string player) {
+
+            //generate list of all possible blocker moves. try all scenarios. if still NotSafeForKing in all tried scenarios, checkmate
+
+            return false;
         }
     }
 }

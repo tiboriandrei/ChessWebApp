@@ -15,10 +15,6 @@ namespace ChessClassLibrary
         public Table Table { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
-
-        private bool WhiteKingIsInCheck { get; set; }
-        private bool BlackKingIsInCheck { get; set; }
-
         public bool evTrig { get; set; }
 
         public void PromotePawn(object sender, PawnPromotionEventArgs e) {
@@ -57,14 +53,6 @@ namespace ChessClassLibrary
             Mediator.GetInstance().PawnPromotion += PromotePawn;
         }
 
-
-        enum moveType
-        {
-            goodMove,
-            illegalMove,
-            kingIsInCheck
-        };
-
         public string MovePiece(string piece, int originX, int originY, int destX, int destY, string player)
         {
             string result = "illegalMove";
@@ -78,8 +66,7 @@ namespace ChessClassLibrary
             }
 
             var origin = new Spot(originX, originY);
-            var dest = new Spot(destX, destY);
-            //var auxSpot = new Spot(0,0);
+            var dest = new Spot(destX, destY);            
 
             bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, player);
 
@@ -146,185 +133,7 @@ namespace ChessClassLibrary
             return result;
         }
 
-        public bool IsChecked(Spot kingPos, string opponent)
-        {
-            //horseman check
-            if (kingPos.CoordX - 1 >= 0 && kingPos.CoordY - 2 >= 0)
-            {
-                if (Table.Spots[kingPos.CoordX - 1, kingPos.CoordY - 2].Occupied)
-                {
-                    if (Table.Spots[kingPos.CoordX - 1, kingPos.CoordY - 2].Piece.ToString() == opponent + "Horseman")
-                    {
-                        return true;
-                    }
-                }
-                
-            }
-
-            if (kingPos.CoordX - 1 >= 0 && kingPos.CoordY + 2 <= 7)
-            {
-                if (Table.Spots[kingPos.CoordX - 1, kingPos.CoordY + 2].Occupied)
-                {
-                    if (Table.Spots[kingPos.CoordX - 1, kingPos.CoordY + 2].Piece.ToString() == opponent + "Horseman")
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            if (kingPos.CoordX + 1 <= 7 && kingPos.CoordY - 2 >= 0)
-            {
-                if (Table.Spots[kingPos.CoordX + 1, kingPos.CoordY - 2].Occupied)
-                {
-                    if (Table.Spots[kingPos.CoordX + 1, kingPos.CoordY - 2].Piece.ToString() == opponent + "Horseman")
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            if (kingPos.CoordX + 1 <= 7 && kingPos.CoordY + 2 <= 7)
-            {
-                if (Table.Spots[kingPos.CoordX + 1, kingPos.CoordY + 2].Occupied)
-                {
-                    if (Table.Spots[kingPos.CoordX + 1, kingPos.CoordY + 2].Piece.ToString() == opponent + "Horseman")
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            //pawns check
-            if (kingPos.CoordX + 1 <= 7 && kingPos.CoordY + 1 <= 7)
-            {
-                if (Table.Spots[kingPos.CoordX + 1, kingPos.CoordY + 1].Occupied)
-                {
-                    if (Table.Spots[kingPos.CoordX + 1, kingPos.CoordY + 1].Piece.ToString() == opponent + "Pawn")
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            if (kingPos.CoordX - 1 >= 0 && kingPos.CoordY + 1 <= 7)
-            {
-                if (Table.Spots[kingPos.CoordX - 1, kingPos.CoordY + 1].Occupied)
-                {
-                    if (Table.Spots[kingPos.CoordX - 1, kingPos.CoordY + 1].Piece.ToString() == opponent + "Pawn")
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            /////////////
-
-            for (int i = 1; i < 8; i++)
-            {
-                if (kingPos.CoordX + i <= 7)
-                {
-                    if (Table.Spots[kingPos.CoordX + i, kingPos.CoordY].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX + i, kingPos.CoordY].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX + i, kingPos.CoordY].Piece.ToString() == opponent + "Rook")
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if (kingPos.CoordX - i >= 0)
-                {
-                    if (Table.Spots[kingPos.CoordX - i, kingPos.CoordY].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX - i, kingPos.CoordY].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX - i, kingPos.CoordY].Piece.ToString() == opponent + "Rook")
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if (kingPos.CoordY + i <= 7)
-                {
-                    if (Table.Spots[kingPos.CoordX, kingPos.CoordY + i].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX, kingPos.CoordY + i].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX, kingPos.CoordY + i].Piece.ToString() == opponent + "Rook")
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if (kingPos.CoordY - i >= 0)
-                {
-                    if (Table.Spots[kingPos.CoordX, kingPos.CoordY - i].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX, kingPos.CoordY - i].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX, kingPos.CoordY - i].Piece.ToString() == opponent + "Rook")
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++)
-            {
-                if (kingPos.CoordX + i <= 7 && kingPos.CoordY + i <= 7)
-                {
-                    if (Table.Spots[kingPos.CoordX + i, kingPos.CoordY + i].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX + i, kingPos.CoordY + i].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX + i, kingPos.CoordY + i].Piece.ToString() == opponent + "Madman")
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if (kingPos.CoordX - i >= 0 && kingPos.CoordY + i <= 7)
-                {
-                    if (Table.Spots[kingPos.CoordX - i, kingPos.CoordY + i].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX - i, kingPos.CoordY + i].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX - i, kingPos.CoordY + i].Piece.ToString() == opponent + "Madman")
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if (kingPos.CoordX + i <= 7 && kingPos.CoordY - i >= 0)
-                {
-                    if (Table.Spots[kingPos.CoordX + i, kingPos.CoordY - i].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX + i, kingPos.CoordY - i].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX + i, kingPos.CoordY - i].Piece.ToString() == opponent + "Madman")
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if (kingPos.CoordX - i >= 0 && kingPos.CoordY - i >= 0)
-                {
-                    if (Table.Spots[kingPos.CoordX - i, kingPos.CoordY - i].Occupied)
-                    {
-                        if (Table.Spots[kingPos.CoordX - i, kingPos.CoordY - i].Piece.ToString() == opponent + "Queen"
-                        || Table.Spots[kingPos.CoordX - i, kingPos.CoordY - i].Piece.ToString() == opponent + "Madman")
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public Table flipTable(Table table)
+        private Table flipTable(Table table)
         {
             Table flippedTable = new Table();
 

@@ -30,15 +30,16 @@ namespace ChessClassLibrary
             }            
         }
 
-        public bool IsWhite() {
-            return this.PieceColour == PieceColourOption.White;
-        }
-
         public bool IsCaptured() {
             return this.PieceState == PieceStateOption.Captured;
         }
 
         public abstract bool TryMove(Table table, Spot origin, Spot dest, string player);               
-        public abstract Table MarkAttackedSpots(Table table, Spot origin, string player);               
+        public abstract Table MarkAttackedSpots(Table table, Spot origin, string player);
+
+        public override string ToString()
+        {
+            return this.PieceColour.ToString() + this.GetType().Name;
+        }
     }
 }

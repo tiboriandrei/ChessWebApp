@@ -120,11 +120,6 @@ namespace ChessClassLibrary.Pieces
             return false;
         }
 
-        public override string ToString()
-        {
-            return this.PieceColour.ToString() + "Queen";
-        }
-
         public override Table MarkAttackedSpots(Table table, Spot origin, string player)
         {
             for (int i = 1; i <= 8; i++)

@@ -59,10 +59,10 @@ namespace ChessClassLibrary.Pieces
             return false;
         }
 
-        public override string ToString()
-        {
-            return this.PieceColour.ToString() + "Pawn";
-        }
+        //public override string ToString()
+        //{
+        //    return this.PieceColour.ToString() + "Pawn";
+        //}
 
         public override Table MarkAttackedSpots(Table table, Spot origin, string player)
         {
