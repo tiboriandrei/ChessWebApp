@@ -56,6 +56,6 @@ Improved UI
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-v6. Applied Interface Segregation Principle inside the Data folder. And consequently multiple interface injection in Program.cs
+v6. Applied Interface Segregation Principle inside the Data folder. And consequently multiple interface dependency injection in Program.cs
 
 Refactored the override ToString() method from the piece classes into the base class by using reflection
