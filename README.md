@@ -46,4 +46,10 @@ to-do:
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 v4.
        All pieces movement logic implemented except ability to castle for king. 
-       to-do: verify if king is in check after every move. 
+       to-do: verify if king is in check after every move.  
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+v5. Implemented King Check logic,
+
+Improved UI
