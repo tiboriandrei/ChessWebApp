@@ -19,14 +19,6 @@ namespace ChessClassLibrary.Pieces
 
         public override bool TryMove(Table table, Spot origin, Spot dest, string player)
         {
-            //PawnPromotionEventArgs args = new PawnPromotionEventArgs
-            //{
-            //    dest = dest,
-            //    player = player
-            //};
-
-            //Mediator.GetInstance().OnPawnPromotion(this, args);
-
             if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
                 {
                     if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
@@ -38,16 +30,10 @@ namespace ChessClassLibrary.Pieces
                     {
                         if (dest.CoordY == 0)
                         {
-                            PawnPromotionEventArgs args = new PawnPromotionEventArgs
-                            {
-                                dest = dest,
-                                player = player
-                            };
-
-                            Mediator.GetInstance().OnPawnPromotion(this, args);
+                            Mediator.GetInstance().OnPawnPromotion(this, new PawnPromotionEventArgs { dest = dest, player = player });
                         }
 
-                        return true; //capture enemy piece
+                        return true; 
                     }
 
                     return false;                                        
@@ -55,23 +41,17 @@ namespace ChessClassLibrary.Pieces
 
                 if (dest.CoordX != origin.CoordX || dest.CoordY > origin.CoordY )
                 {
-                    return false;                           //can move only forward
+                    return false;                           
                 }
                 else if (origin.CoordY == 6 && (Math.Abs(dest.CoordY - origin.CoordY) == 2) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false) && (table.Spots[dest.CoordX, Math.Abs(2 - origin.CoordY)].Occupied == false))
                 {
-                    return true;                                //move 2 spots forward if origin.CoordY == starting place 
+                    return true;                               
                 }
                 else if ((Math.Abs(dest.CoordY - origin.CoordY) == 1) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false))
                 {
                     if (dest.CoordY == 0)
                     {
-                        PawnPromotionEventArgs args = new PawnPromotionEventArgs
-                        {
-                            dest = dest,
-                            player = player
-                        };
-
-                        Mediator.GetInstance().OnPawnPromotion(this, args);
+                        Mediator.GetInstance().OnPawnPromotion(this, new PawnPromotionEventArgs { dest = dest, player = player });
                     }
 
                     return true;    
@@ -79,7 +59,7 @@ namespace ChessClassLibrary.Pieces
             
             return false;
         }
-
+            
         //public override string ToString()
         //{
         //    return this.PieceColour.ToString() + "Pawn";

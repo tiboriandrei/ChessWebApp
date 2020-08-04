@@ -55,20 +55,12 @@ namespace ChessClassLibrary
             if (goodMove)
             {
                 result = "goodMove";
+                   
+                Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
+                Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
 
-                if (!eventCalled)
-                {                    
-                    Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
-                    Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
-
-                    Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
-                    Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
-                }
-                else if (eventCalled) 
-                {
-                    Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
-                    Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
-                }
+                Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
+                Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;                
 
                 foreach (Spot spot in Table.Spots)
                 {
@@ -113,6 +105,13 @@ namespace ChessClassLibrary
                 Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
             }
 
+            if (promoteEventCalled)
+            {
+                Table.Spots[dest.CoordX, dest.CoordY].Piece = new Queen(player == "White");
+                Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
+                promoteEventCalled = false;
+            }
+
             if (player == "Black")
             {
                 this.Table = flipTable(this.Table);
@@ -137,18 +136,17 @@ namespace ChessClassLibrary
             return flippedTable;
         }
 
-        public bool eventCalled { get; set; } = false;
+        private bool promoteEventCalled { get; set; } = false;
         public void PromotePawn(object sender, PawnPromotionEventArgs e)
         {
-            eventCalled = true;
-            bool color = false;
-            if (e.player == "White")
-            {
-                color = true;
-            }
+            promoteEventCalled = true;
+            //bool color = false;
+            //if (e.player == "White")
+            //{
+            //    color = true;
+            //}
 
-            this.Table.Spots[e.dest.CoordX, e.dest.CoordY].Piece = new Queen(color);
+            //this.Table.Spots[e.dest.CoordX, e.dest.CoordY].Piece = new Queen(color);
         }
-
     }
 }

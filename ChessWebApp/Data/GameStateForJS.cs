@@ -14,7 +14,6 @@ namespace ChessWebApp.Data
             CoordX = coordX;
             CoordY = coordY;
         }
-
         public string Piece { get; set; }
         public string Color { get; set; }
         public int CoordX { get; set; }
