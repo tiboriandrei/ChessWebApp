@@ -20,8 +20,6 @@ namespace ChessWebApp.Data
 
         public void AddGame(Game newGame)
         {
-            //converting ChessClassLibrary.Game to ChessWebApp.Data.Entities.ChessGame
-
             ChessGame game = new ChessGame();
 
             ChessPlayer p1 = _ctx.Players.Find(10);         //id player1 (temporarily hardcoded)
@@ -78,9 +76,7 @@ namespace ChessWebApp.Data
         }
 
         public Game GetGameByID(int id)
-        {
-            //converting ChessWebApp.Data.Entities.ChessGame back to ChessClassLibrary.Game
-            
+        {            
             Game g = null;
 
             foreach (var game in _ctx.Games.Include(d => d.GameState).Include(d => d.GameState.Spots).Include(d => d.Player1).Include(d => d.Player2))
@@ -176,8 +172,6 @@ namespace ChessWebApp.Data
 
             string color = "";
             string type = "";
-
-            //List<GameStateForJS> list = new List<GameStateForJS>();
 
             GameStateForJS[,] array = new GameStateForJS[8,8];
             GameStateForJS[] array1D = new GameStateForJS[64];

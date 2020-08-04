@@ -17,40 +17,27 @@ namespace ChessClassLibrary
         public bool NotSafeForBK { get; set; }
        
 
-        public Spot(int i, int j)
+        public Spot(int x, int y)
         {
             Piece = null;
             Occupied = false;
-            CoordX = i;
-            CoordY = j;
+            CoordX = x;
+            CoordY = y;
             
             NotSafeForWK = false;
             NotSafeForBK = false;
         }
 
-        public Spot(ChessPiece piece, bool occupied)
+        public Spot(int x, int y, ChessPiece piece, bool occupied)
         {
+            CoordX = x;
+            CoordY = y;
             Piece = piece;
             Occupied = occupied;
+
+            NotSafeForWK = false;
+            NotSafeForBK = false;
         }
 
-        public Spot(int i, int j, ChessPiece piece, bool occupied)
-        {
-            CoordX = i;
-            CoordY = j;
-            Piece = piece;
-            Occupied = occupied;
-        }
-
-        public void ChangeState(ChessPiece piece)
-        {
-            this.Piece = piece;
-            if (piece == null)
-            {
-                this.Occupied = false;
-            }
-        }
-
-        
     }
 }

@@ -8,47 +8,26 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary
 {
-    public delegate void PawnPromotionHandler(object sender, PawnPromotionEventArgs e);
-    
     public class Game
-    {      
+    {
         public Table Table { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
-        public bool evTrig { get; set; }
-
-        public void PromotePawn(object sender, PawnPromotionEventArgs e) {
-            evTrig = true;
-            bool color = false;
-            if (e.player == "White")
-            {
-                color = true;
-            }
-
-            this.Table.Spots[e.dest.CoordX, e.dest.CoordY].Piece = new Queen(color);
-        }
-
+       
         public Game(Player p1, Player p2)
         {
             this.Table = new Table();
             this.Player1 = p1;
             this.Player2 = p2;
-            this.evTrig = false;
 
-            Mediator.GetInstance().PawnPromotion += PromotePawn;           
+            Mediator.GetInstance().PawnPromotion += PromotePawn;        
         }
 
         public Game(Player p1, Player p2, Table restoredTable)
         {
             this.Table = restoredTable;
             this.Player1 = p1;
-            this.Player2 = p2;
-            this.evTrig = false;
-
-            //Mediator.GetInstance().PawnPromotion += (s, e) =>
-            //{
-            //    PromotePawn(s, e);
-            //};
+            this.Player2 = p2;            
 
             Mediator.GetInstance().PawnPromotion += PromotePawn;
         }
@@ -56,6 +35,8 @@ namespace ChessClassLibrary
         public string MovePiece(string piece, int originX, int originY, int destX, int destY, string player)
         {
             string result = "illegalMove";
+            ChessPiece attackedPiece;
+
             if (player == "Black")
             {
                 originX = 7 - originX;
@@ -66,22 +47,29 @@ namespace ChessClassLibrary
             }
 
             var origin = new Spot(originX, originY);
-            var dest = new Spot(destX, destY);            
+            var dest = new Spot(destX, destY);
+            attackedPiece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
 
             bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, player);
 
             if (goodMove)
             {
                 result = "goodMove";
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
 
-                Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
-                Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
-            }
+                if (!eventCalled)
+                {                    
+                    Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
+                    Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
 
-            if (goodMove)
-            {
+                    Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
+                    Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
+                }
+                else if (eventCalled) 
+                {
+                    Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
+                    Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
+                }
+
                 foreach (Spot spot in Table.Spots)
                 {
                     if (spot.Occupied)
@@ -121,7 +109,7 @@ namespace ChessClassLibrary
                 Table.Spots[origin.CoordX, origin.CoordY].Piece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
                 Table.Spots[origin.CoordX, origin.CoordY].Occupied = true;
 
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = null;
+                Table.Spots[dest.CoordX, dest.CoordY].Piece = attackedPiece;
                 Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
             }
 
@@ -147,6 +135,19 @@ namespace ChessClassLibrary
                 }
             }
             return flippedTable;
+        }
+
+        public bool eventCalled { get; set; } = false;
+        public void PromotePawn(object sender, PawnPromotionEventArgs e)
+        {
+            eventCalled = true;
+            bool color = false;
+            if (e.player == "White")
+            {
+                color = true;
+            }
+
+            this.Table.Spots[e.dest.CoordX, e.dest.CoordY].Piece = new Queen(color);
         }
 
     }

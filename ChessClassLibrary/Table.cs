@@ -10,8 +10,7 @@ namespace ChessClassLibrary
     public class Table
     {
         public Spot[,] Spots { get; set; }
-        private List<ChessPiece> CapturedPieces { get; set; }
-        private List<ChessPiece> Pieces { get; set; }
+        //public List<ChessPiece> CapturedPieces { get; set; }        
 
         public Table() {
 

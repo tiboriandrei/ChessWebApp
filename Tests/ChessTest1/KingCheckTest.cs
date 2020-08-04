@@ -32,10 +32,10 @@ namespace ChessTest1
         [TestMethod]
         public void BlackKingCheckTest()
         {
-            //game.Table.Spots[2, 2].Piece = new Horseman(true);     //white horse
+            //game.Table.Spots[2, 2].Piece = new Horseman(true);     
             //game.Table.Spots[2, 2].Occupied = true;
 
-            game.Table.Spots[3, 5].Piece = new Queen(true);     //white queen
+            game.Table.Spots[3, 5].Piece = new Queen(true);   
             game.Table.Spots[3, 5].Occupied = true;
 
             game.Table.Spots[3, 1].Piece = null;

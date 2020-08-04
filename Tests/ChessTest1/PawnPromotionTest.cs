@@ -23,27 +23,12 @@ namespace ChessTest1
         }
 
         [TestMethod]
-        public void EventGetsTriggered()
-        {
-            game.Table.Spots[1, 1].Piece = new Pawn(true);
-            game.Table.Spots[1, 1].Occupied = true;
-
-            game.MovePiece("Pawn", 1, 1, 0, 0, "White");
-            
-            bool expectedB = true;
-            bool actualB = game.evTrig;
-
-            Assert.AreEqual(expectedB, actualB);
-        }
-
-
-        [TestMethod]
         public void PawnEventGetsTriggered()
         {
             game.Table.Spots[1, 1].Piece = new Pawn(true);
             game.Table.Spots[1, 1].Occupied = true;
 
-            game.MovePiece("Pawn", 1,1,0,0, "White");
+            game.MovePiece("Pawn", 1, 1, 0, 0, "White");
 
             string expectedPiece = new Queen(true).ToString();
             string actualPiece = game.Table.Spots[0, 0].Piece.ToString();

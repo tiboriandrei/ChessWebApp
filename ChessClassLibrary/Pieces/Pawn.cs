@@ -18,7 +18,15 @@ namespace ChessClassLibrary.Pieces
         //move to the right means CoordX + distance
 
         public override bool TryMove(Table table, Spot origin, Spot dest, string player)
-        {            
+        {
+            //PawnPromotionEventArgs args = new PawnPromotionEventArgs
+            //{
+            //    dest = dest,
+            //    player = player
+            //};
+
+            //Mediator.GetInstance().OnPawnPromotion(this, args);
+
             if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
                 {
                     if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
@@ -28,7 +36,18 @@ namespace ChessClassLibrary.Pieces
                     
                     if ( ((dest.CoordX == origin.CoordX - 1) || (dest.CoordX == origin.CoordX + 1)) && (Math.Abs(dest.CoordY - origin.CoordY) == 1))
                     {
-                         return true; //capture enemy piece
+                        if (dest.CoordY == 0)
+                        {
+                            PawnPromotionEventArgs args = new PawnPromotionEventArgs
+                            {
+                                dest = dest,
+                                player = player
+                            };
+
+                            Mediator.GetInstance().OnPawnPromotion(this, args);
+                        }
+
+                        return true; //capture enemy piece
                     }
 
                     return false;                                        
@@ -43,14 +62,16 @@ namespace ChessClassLibrary.Pieces
                     return true;                                //move 2 spots forward if origin.CoordY == starting place 
                 }
                 else if ((Math.Abs(dest.CoordY - origin.CoordY) == 1) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false))
-                {                
+                {
                     if (dest.CoordY == 0)
                     {
-                        PawnPromotionEventArgs args = new PawnPromotionEventArgs();
-                        args.dest = dest;
-                        args.player = player;
+                        PawnPromotionEventArgs args = new PawnPromotionEventArgs
+                        {
+                            dest = dest,
+                            player = player
+                        };
 
-                        Mediator.GetInstance().OnPawnPromotion(this, args);                                     
+                        Mediator.GetInstance().OnPawnPromotion(this, args);
                     }
 
                     return true;    

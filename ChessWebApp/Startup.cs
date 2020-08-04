@@ -54,9 +54,7 @@ namespace ChessWebApp
             //services.AddScoped<IChessAppRepository, ChessAppRepository>();
 
             services.AddScoped<ChessAppRepository>();
-
             services.AddSingleton<IChessGameRepository>(s => s.GetService<ChessAppRepository>());
-
             services.AddSingleton<IChessPlayersRepository>(s => s.GetService<ChessAppRepository>());
 
 

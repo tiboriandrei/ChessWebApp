@@ -29,7 +29,7 @@ namespace ChessClassLibrary.Pieces
 
             if (Math.Abs(dest.CoordX - origin.CoordX) == 2 && Math.Abs(dest.CoordY - origin.CoordY) == 1)
             {
-                return true;                                                                                                          //(saved horse implementation for last, i thought it would be most difficult piece to implement lol...)
+                return true;                                                                                                          
             }
 
             return false;

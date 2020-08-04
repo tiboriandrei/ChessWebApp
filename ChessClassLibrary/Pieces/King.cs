@@ -47,6 +47,8 @@ namespace ChessClassLibrary.Pieces
                         }
 
                     }
+                    
+                    
                     return false;
                 }                
             }

@@ -25,24 +25,28 @@ namespace ChessClassLibrary
 
         public void OnPawnPromotion(object sender, PawnPromotionEventArgs e)
         {
-            EventHandler<PawnPromotionEventArgs> handler = PawnPromotion;
-            handler?.Invoke(this, new PawnPromotionEventArgs { dest = e.dest, player = e.player });
-        }
-
-        public void _OnPawnPromotion(PawnPromotionEventArgs args)
-        {
-            EventHandler<PawnPromotionEventArgs> handler = PawnPromotion;
-           // handler?.Invoke(this, new PawnPromotionEventArgs { dest = args.dest, player = args.player });
-
-
-            if (handler!=null)
-            {
-                handler(this, args);
-            }
-           
+            PawnPromotion?.Invoke(this, e);
         }
 
 
+
+
+
+
+
+
+
+
+        //public void _OnPawnPromotion(PawnPromotionEventArgs args)
+        //{
+        //    EventHandler<PawnPromotionEventArgs> handler = PawnPromotion;
+        //   // handler?.Invoke(this, new PawnPromotionEventArgs { dest = args.dest, player = args.player });
+
+        //    if (handler!=null)
+        //    {
+        //        handler(this, args);
+        //    }           
+        //}
 
     }
 }

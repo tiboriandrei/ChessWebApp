@@ -15,7 +15,7 @@ namespace ChessWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ChessAppRepository _repository;
-        
+
         public HomeController(ChessAppRepository repository)
         {
             _repository = repository;
@@ -75,8 +75,7 @@ namespace ChessWebApp.Controllers
         {            
             try
             {
-                Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
-                //string moveResult = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
+                Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);                
                 string moveResult = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
 
                 if (moveResult == "goodMove")
@@ -88,7 +87,7 @@ namespace ChessWebApp.Controllers
             }
             catch (Exception ex)
             {
-                return Json("bad move");
+                return Json("something went wrong");
             }
         }
 
