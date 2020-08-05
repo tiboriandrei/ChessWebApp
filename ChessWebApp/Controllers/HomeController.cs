@@ -77,12 +77,10 @@ namespace ChessWebApp.Controllers
 
             Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
 
-            Black p = new Black("B", 0, 0, 0);
-
             var origin = new Spot(originColumn - 1, originRow - 1);
             var dest = new Spot(destColumn - 1, destRow - 1);
 
-            p.DoAMove(origin, dest);
+            returnedGame.Black.DoAMove(origin, dest);
 
             string moveResult = returnedGame.MoveResult;
             if (moveResult == "goodMove")
@@ -101,15 +99,12 @@ namespace ChessWebApp.Controllers
             {
                 Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
 
-                White p = new White("W", 0,0,0);
-                //White p = (White)_repository.GetPlayerByID(10);
-
                 var origin = new Spot(originColumn - 1, originRow - 1);
                 var dest = new Spot(destColumn - 1, destRow - 1);
                               
-                p.DoAMove(origin, dest);                
+                returnedGame.White.DoAMove(origin, dest);                
 
-                string moveResult = returnedGame.MoveResult;
+                string moveResult = returnedGame.MoveResult;                
                 if (moveResult == "goodMove")
                 {
                     _repository.UpdateGame(hardcodedGetGameID, originColumn - 1, originRow - 1, destColumn - 1, destRow - 1, player, piece);

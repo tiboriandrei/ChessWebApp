@@ -12,21 +12,21 @@ namespace ChessClassLibrary.Pieces
         {
         }
 
-        public override bool TryMove(Table table, Spot origin, Spot dest, string player)
+        public override bool TryMove(Spot[,] Spots, Spot origin, Spot dest, string player)
         {
-            if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
+            if (Spots[dest.CoordX, dest.CoordY].Occupied == true)
             {
-                if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
+                if (Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
                 {
                     //if rook try castle
-                    if (table.Spots[dest.CoordX, dest.CoordY].Piece.ToString() == "WhiteRook" && origin.CoordX == 3 && origin.CoordY == 7
+                    if (Spots[dest.CoordX, dest.CoordY].Piece.ToString() == "WhiteRook" && origin.CoordX == 3 && origin.CoordY == 7
                         && ((dest.CoordX == 0 && dest.CoordY == 7) || (dest.CoordX == 7 && dest.CoordY == 7)))
                     {
                         if (dest.CoordX > origin.CoordX)
                         {
                             for (int i = 1; i < 4; i++)
                             {
-                                if (table.Spots[dest.CoordX + 1, dest.CoordY].Occupied)
+                                if (Spots[dest.CoordX + 1, dest.CoordY].Occupied)
                                 {
                                     return false;
                                 }
@@ -38,7 +38,7 @@ namespace ChessClassLibrary.Pieces
                         {
                             for (int i = 1; i < 3; i++)
                             {
-                                if (table.Spots[dest.CoordX - 1, dest.CoordY].Occupied)
+                                if (Spots[dest.CoordX - 1, dest.CoordY].Occupied)
                                 {
                                     return false;
                                 }
@@ -65,17 +65,17 @@ namespace ChessClassLibrary.Pieces
             return false;
         }
 
-        public override Table MarkAttackedSpots(Table table, Spot origin, string player)
+        public override Spot[,] MarkAttackedSpots(Spot[,] Spots, Spot origin, string player)
         {
             if (origin.CoordX - 1 >= 0 && origin.CoordY - 1 >= 0)
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForBK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForWK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForWK = true;
                 }
             }
 
@@ -83,11 +83,11 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY + 1].NotSafeForBK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY + 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY + 1].NotSafeForWK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY + 1].NotSafeForWK = true;
                 }
             }
 
@@ -95,11 +95,11 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForBK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForWK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForWK = true;
                 }
             }
 
@@ -107,11 +107,11 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY + 1].NotSafeForBK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY + 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY + 1].NotSafeForWK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY + 1].NotSafeForWK = true;
                 }
             }
 
@@ -119,11 +119,11 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY].NotSafeForBK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY].NotSafeForWK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY].NotSafeForWK = true;
                 }
             }
 
@@ -131,11 +131,11 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY].NotSafeForBK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY].NotSafeForWK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY].NotSafeForWK = true;
                 }
             }
 
@@ -143,11 +143,11 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX, origin.CoordY + 1].NotSafeForBK = true;
+                    Spots[origin.CoordX, origin.CoordY + 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX, origin.CoordY + 1].NotSafeForWK = true;
+                    Spots[origin.CoordX, origin.CoordY + 1].NotSafeForWK = true;
                 }
             }
 
@@ -155,15 +155,15 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX, origin.CoordY - 1].NotSafeForBK = true;
+                    Spots[origin.CoordX, origin.CoordY - 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX, origin.CoordY - 1].NotSafeForWK = true;
+                    Spots[origin.CoordX, origin.CoordY - 1].NotSafeForWK = true;
                 }
             }
 
-            return table;
+            return Spots;
         }
 
         public bool IsCheckMated(Table table, Spot origin, string player) {

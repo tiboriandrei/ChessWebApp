@@ -130,7 +130,7 @@ namespace ChessWebApp.Data
 
                     Table restoredTable = new Table(spotList);
 
-                    g = new Game(restoredTable);
+                    g = new Game(p1, p2, restoredTable);
                 }
             }
 

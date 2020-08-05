@@ -17,11 +17,11 @@ namespace ChessClassLibrary.Pieces
         //move forward means CoordY minus distance
         //move to the right means CoordX + distance
 
-        public override bool TryMove(Table table, Spot origin, Spot dest, string player)
+        public override bool TryMove(Spot[,] Spots, Spot origin, Spot dest, string player)
         {
-            if (table.Spots[dest.CoordX, dest.CoordY].Occupied == true)
+            if (Spots[dest.CoordX, dest.CoordY].Occupied == true)
                 {
-                    if (table.Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == table.Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
+                    if (Spots[dest.CoordX, dest.CoordY].Piece.PieceColour == Spots[origin.CoordX, origin.CoordY].Piece.PieceColour)
                     {
                         return false;
                     }
@@ -43,11 +43,11 @@ namespace ChessClassLibrary.Pieces
                 {
                     return false;                           
                 }
-                else if (origin.CoordY == 6 && (Math.Abs(dest.CoordY - origin.CoordY) == 2) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false) && (table.Spots[dest.CoordX, Math.Abs(2 - origin.CoordY)].Occupied == false))
+                else if (origin.CoordY == 6 && (Math.Abs(dest.CoordY - origin.CoordY) == 2) && (Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false) && (Spots[dest.CoordX, Math.Abs(2 - origin.CoordY)].Occupied == false))
                 {
                     return true;                               
                 }
-                else if ((Math.Abs(dest.CoordY - origin.CoordY) == 1) && (table.Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false))
+                else if ((Math.Abs(dest.CoordY - origin.CoordY) == 1) && (Spots[dest.CoordX, Math.Abs(1 - origin.CoordY)].Occupied == false))
                 {
                     if (dest.CoordY == 0)
                     {
@@ -65,17 +65,17 @@ namespace ChessClassLibrary.Pieces
         //    return this.PieceColour.ToString() + "Pawn";
         //}
 
-        public override Table MarkAttackedSpots(Table table, Spot origin, string player)
+        public override Spot[,] MarkAttackedSpots(Spot[,] Spots, Spot origin, string player)
         {
             if (origin.CoordX - 1 >= 0 && origin.CoordY - 1 >= 0)
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForBK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForWK = true;
+                    Spots[origin.CoordX - 1, origin.CoordY - 1].NotSafeForWK = true;
                 }
             }
 
@@ -83,15 +83,15 @@ namespace ChessClassLibrary.Pieces
             {
                 if (player == "White")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForBK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForBK = true;
                 }
                 else if (player == "Black")
                 {
-                    table.Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForWK = true;
+                    Spots[origin.CoordX + 1, origin.CoordY - 1].NotSafeForWK = true;
                 }
             }
 
-            return table;
+            return Spots;
         }
 
     }

@@ -12,7 +12,7 @@ namespace ChessClassLibrary
         public int NrOfWins { get; set; }
         public int NrOfLosses { get; set; }
         public int NrOfDraws { get; set; }
-        private List<string> MatchHistory { get; set; }
+        public List<string> MatchHistory { get; set; }
 
         public Player(string name, int nrOfWins, int nrOfLosses, int nrOfDraws)
         {

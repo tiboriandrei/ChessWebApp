@@ -14,8 +14,7 @@ namespace ChessClassLibrary
         public int CoordY { get; set; }
 
         public bool NotSafeForWK { get; set; }
-        public bool NotSafeForBK { get; set; }
-       
+        public bool NotSafeForBK { get; set; }       
 
         public Spot(int x, int y)
         {

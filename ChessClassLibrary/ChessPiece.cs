@@ -34,8 +34,8 @@ namespace ChessClassLibrary
             return this.PieceState == PieceStateOption.Captured;
         }
 
-        public abstract bool TryMove(Table table, Spot origin, Spot dest, string player);               
-        public abstract Table MarkAttackedSpots(Table table, Spot origin, string player);
+        public abstract bool TryMove(Spot[,] Spots, Spot origin, Spot dest, string player);               
+        public abstract Spot[,] MarkAttackedSpots(Spot[,] Spots, Spot origin, string player);
 
         public override string ToString()
         {

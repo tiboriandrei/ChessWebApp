@@ -11,226 +11,138 @@ namespace ChessClassLibrary
 {
     public class Game
     {
-        public Table Table { get; set; }      
+        public Table Table { get; set; }
+        public White White { get; set; }
+        public Black Black { get; set; }        
         public string PlayerTurn { get; set; } = "White";
         public string MoveResult { get; set; }
        
-        public Game()
+        public Game(Player p1, Player p2)
         {
-            this.Table = new Table();            
-
-            Mediator.GetInstance().PawnPromotion += PromotePawn;        
-            Mediator.GetInstance().PlayerMoves += Move;        
+            this.Table = new Table();
+            this.White = (White)p1;
+            this.Black = (Black)p2;
+                        
+            //Mediator.GetInstance().Result += GetResult;
+            //Mediator.GetInstance().PlayerMoves += Move;        
         }
 
-        public Game(Table restoredTable)
+        public Game(Player p1, Player p2, Table restoredTable)
         {
-            this.Table = restoredTable;                      
-
-            Mediator.GetInstance().PawnPromotion += PromotePawn;
-            Mediator.GetInstance().PlayerMoves += Move;
+            this.Table = restoredTable; 
+            this.White = (White)p1;
+            this.Black = (Black)p2;
+                        
+            Mediator.GetInstance().Result += GetResult;
         }
 
-        public string MovePiece(string piece, int originX, int originY, int destX, int destY, string player)
-        {
-            string result = "illegalMove";
-            ChessPiece attackedPiece;
+        //private Table flipTable(Table table)
+        //{
+        //    Table flippedTable = new Table();
 
-            if (player == "Black")
-            {
-                originX = 7 - originX;
-                originY = 7 - originY;
-                destX = 7 - destX;
-                destY = 7 - destY;
-                this.Table = flipTable(this.Table);
-            }
+        //    for (int i = 0; i < 8; i++)
+        //    {
+        //        for (int j = 0; j < 8; j++)
+        //        {                    
+        //            flippedTable.Spots[i, j] = table.Spots[7 - i, 7 - j];
+        //            flippedTable.Spots[i, j].CoordX = 7 - i;
+        //            flippedTable.Spots[i, j].CoordY = 7 - j;
+        //        }
+        //    }
+        //    return flippedTable;
+        //}
 
-            var origin = new Spot(originX, originY);
-            var dest = new Spot(destX, destY);
-            attackedPiece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
+        //public void Move(object sender, PlayerMoveEventArgs e)
+        //{
+        //    string result = "illegalMove";
+        //    ChessPiece attackedPiece;
 
-            bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, player);
+        //    if (sender.GetType().Name == "Black")
+        //    {
+        //        e.origin.CoordX = 7 - e.origin.CoordX;
+        //        e.origin.CoordY = 7 - e.origin.CoordY;
+        //        e.dest.CoordX = 7 - e.origin.CoordX;
+        //        e.dest.CoordY = 7 - e.dest.CoordY;
+        //        this.Table = flipTable(this.Table);
+        //    }
 
-            if (goodMove)
-            {
-                result = "goodMove";
-                   
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
+        //    var origin = new Spot(e.origin.CoordX, e.origin.CoordY);
+        //    var dest = new Spot(e.dest.CoordX, e.dest.CoordY);
 
-                Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
-                Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;                
+        //    attackedPiece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
 
-                foreach (Spot spot in Table.Spots)
-                {
-                    if (spot.Occupied)
-                    {
-                        if (player == "Black")
-                        {
-                            this.Table = flipTable(this.Table);
-                            this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(7 - spot.CoordX, 7 - spot.CoordY), spot.Piece.PieceColour.ToString());
-                            this.Table = flipTable(this.Table);
-                        }
-                        else if (player == "White")
-                        {
-                            this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(spot.CoordX, spot.CoordY), spot.Piece.PieceColour.ToString());
-                        }                        
-                    }
-                }
+        //    bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, sender.GetType().Name);
 
-                foreach (Spot spot in Table.Spots)
-                {
-                    if (spot.Occupied)
-                    {
-                        if (player == "White" && spot.Piece.ToString() == "WhiteKing" && spot.NotSafeForWK)
-                        {
-                           result = "WK_IsInCheck";
-                        }
+        //    if (goodMove)
+        //    {
+        //        result = "goodMove";
 
-                        if (player == "Black" && spot.Piece.ToString() == "BlackKing" && spot.NotSafeForBK)
-                        {
-                           result = "BK_IsInCheck";
-                        }
-                    }                   
-                }
-            }
+        //        Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
+        //        Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
 
-            if (result == "WK_IsInCheck" || result == "BK_IsInCheck")
-            {                
-                Table.Spots[origin.CoordX, origin.CoordY].Piece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
-                Table.Spots[origin.CoordX, origin.CoordY].Occupied = true;
+        //        Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
+        //        Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
 
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = attackedPiece;
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
-            }
+        //        foreach (Spot spot in Table.Spots)
+        //        {
+        //            if (spot.Occupied)
+        //            {
+        //                if (sender.GetType().Name == "Black")
+        //                {
+        //                    this.Table = flipTable(this.Table);
+        //                    this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(7 - spot.CoordX, 7 - spot.CoordY), spot.Piece.PieceColour.ToString());
+        //                    this.Table = flipTable(this.Table);
+        //                }
+        //                else if (sender.GetType().Name == "White")
+        //                {
+        //                    this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(spot.CoordX, spot.CoordY), spot.Piece.PieceColour.ToString());
+        //                }
+        //            }
+        //        }
 
-            if (promoteEventCalled && result == "goodMove")
-            {
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = new Queen(player == "White");
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
-                promoteEventCalled = false;
-            }
+        //        foreach (Spot spot in Table.Spots)
+        //        {
+        //            if (spot.Occupied)
+        //            {
+        //                if (sender.GetType().Name == "White" && spot.Piece.ToString() == "WhiteKing" && spot.NotSafeForWK)
+        //                {
+        //                    result = "WK_IsInCheck";
+        //                }
 
-            if (player == "Black")
-            {
-                this.Table = flipTable(this.Table);
-            }
+        //                if (sender.GetType().Name == "Black" && spot.Piece.ToString() == "BlackKing" && spot.NotSafeForBK)
+        //                {
+        //                    result = "BK_IsInCheck";
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return result;
-        }
+        //    if (result == "WK_IsInCheck" || result == "BK_IsInCheck")
+        //    {
+        //        Table.Spots[origin.CoordX, origin.CoordY].Piece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
+        //        Table.Spots[origin.CoordX, origin.CoordY].Occupied = true;
 
-        private Table flipTable(Table table)
-        {
-            Table flippedTable = new Table();
+        //        Table.Spots[dest.CoordX, dest.CoordY].Piece = attackedPiece;
+        //        Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
+        //    }
 
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {                    
-                    flippedTable.Spots[i, j] = table.Spots[7 - i, 7 - j];
-                    flippedTable.Spots[i, j].CoordX = 7 - i;
-                    flippedTable.Spots[i, j].CoordY = 7 - j;
-                }
-            }
-            return flippedTable;
-        }
+        //    if (promoteEventCalled && result == "goodMove")
+        //    {
+        //        Table.Spots[dest.CoordX, dest.CoordY].Piece = new Queen(sender.GetType().Name == "White");
+        //        Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
+        //        promoteEventCalled = false;
+        //    }
 
+        //    if (sender.GetType().Name == "Black")
+        //    {
+        //        this.Table = flipTable(this.Table);
+        //    }
 
-        public void Move(object sender, PlayerMoveEventArgs e)
-        {
-            string result = "illegalMove";
-            ChessPiece attackedPiece;
-
-            if (sender.GetType().Name == "Black")
-            {
-                e.origin.CoordX = 7 - e.origin.CoordX;
-                e.origin.CoordY = 7 - e.origin.CoordY;
-                e.dest.CoordX = 7 - e.origin.CoordX;
-                e.dest.CoordY = 7 - e.dest.CoordY;
-                this.Table = flipTable(this.Table);
-            }
-
-            var origin = new Spot(e.origin.CoordX, e.origin.CoordY);
-            var dest = new Spot(e.dest.CoordX, e.dest.CoordY);
-
-            attackedPiece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
-
-            bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, sender.GetType().Name);
-
-            if (goodMove)
-            {
-                result = "goodMove";
-
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
-
-                Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
-                Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;
-
-                foreach (Spot spot in Table.Spots)
-                {
-                    if (spot.Occupied)
-                    {
-                        if (sender.GetType().Name == "Black")
-                        {
-                            this.Table = flipTable(this.Table);
-                            this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(7 - spot.CoordX, 7 - spot.CoordY), spot.Piece.PieceColour.ToString());
-                            this.Table = flipTable(this.Table);
-                        }
-                        else if (sender.GetType().Name == "White")
-                        {
-                            this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(spot.CoordX, spot.CoordY), spot.Piece.PieceColour.ToString());
-                        }
-                    }
-                }
-
-                foreach (Spot spot in Table.Spots)
-                {
-                    if (spot.Occupied)
-                    {
-                        if (sender.GetType().Name == "White" && spot.Piece.ToString() == "WhiteKing" && spot.NotSafeForWK)
-                        {
-                            result = "WK_IsInCheck";
-                        }
-
-                        if (sender.GetType().Name == "Black" && spot.Piece.ToString() == "BlackKing" && spot.NotSafeForBK)
-                        {
-                            result = "BK_IsInCheck";
-                        }
-                    }
-                }
-            }
-
-            if (result == "WK_IsInCheck" || result == "BK_IsInCheck")
-            {
-                Table.Spots[origin.CoordX, origin.CoordY].Piece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
-                Table.Spots[origin.CoordX, origin.CoordY].Occupied = true;
-
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = attackedPiece;
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
-            }
-
-            if (promoteEventCalled && result == "goodMove")
-            {
-                Table.Spots[dest.CoordX, dest.CoordY].Piece = new Queen(sender.GetType().Name == "White");
-                Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
-                promoteEventCalled = false;
-            }
-
-            if (sender.GetType().Name == "Black")
-            {
-                this.Table = flipTable(this.Table);
-            }
-
-            MoveResult = result;
-        }
-
-
-        private bool promoteEventCalled { get; set; } = false;
+        //    MoveResult = result;
+        //}
+                
         public void PromotePawn(object sender, PawnPromotionEventArgs e)
         {
-            promoteEventCalled = true;
-
             //bool color = false;
             //if (e.player == "White")
             //{
@@ -239,5 +151,99 @@ namespace ChessClassLibrary
 
             //this.Table.Spots[e.dest.CoordX, e.dest.CoordY].Piece = new Queen(color);
         }
+
+        public void GetResult(object sender, string e)
+        {
+            MoveResult = e;
+            Mediator.GetInstance().Result -= GetResult;
+        }
     }
+
+    //public string MovePiece(string piece, int originX, int originY, int destX, int destY, string player)
+    //{
+    //    string result = "illegalMove";
+    //    ChessPiece attackedPiece;
+
+    //    if (player == "Black")
+    //    {
+    //        originX = 7 - originX;
+    //        originY = 7 - originY;
+    //        destX = 7 - destX;
+    //        destY = 7 - destY;
+    //        this.Table = flipTable(this.Table);
+    //    }
+
+    //    var origin = new Spot(originX, originY);
+    //    var dest = new Spot(destX, destY);
+    //    attackedPiece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
+
+    //    bool goodMove = Table.Spots[origin.CoordX, origin.CoordY].Piece.TryMove(Table, origin, dest, player);
+
+    //    if (goodMove)
+    //    {
+    //        result = "goodMove";
+
+    //        Table.Spots[dest.CoordX, dest.CoordY].Piece = Table.Spots[origin.CoordX, origin.CoordY].Piece;
+    //        Table.Spots[dest.CoordX, dest.CoordY].Occupied = true;
+
+    //        Table.Spots[origin.CoordX, origin.CoordY].Piece = null;
+    //        Table.Spots[origin.CoordX, origin.CoordY].Occupied = false;                
+
+    //        foreach (Spot spot in Table.Spots)
+    //        {
+    //            if (spot.Occupied)
+    //            {
+    //                if (player == "Black")
+    //                {
+    //                    this.Table = flipTable(this.Table);
+    //                    this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(7 - spot.CoordX, 7 - spot.CoordY), spot.Piece.PieceColour.ToString());
+    //                    this.Table = flipTable(this.Table);
+    //                }
+    //                else if (player == "White")
+    //                {
+    //                    this.Table = spot.Piece.MarkAttackedSpots(this.Table, new Spot(spot.CoordX, spot.CoordY), spot.Piece.PieceColour.ToString());
+    //                }                        
+    //            }
+    //        }
+
+    //        foreach (Spot spot in Table.Spots)
+    //        {
+    //            if (spot.Occupied)
+    //            {
+    //                if (player == "White" && spot.Piece.ToString() == "WhiteKing" && spot.NotSafeForWK)
+    //                {
+    //                   result = "WK_IsInCheck";
+    //                }
+
+    //                if (player == "Black" && spot.Piece.ToString() == "BlackKing" && spot.NotSafeForBK)
+    //                {
+    //                   result = "BK_IsInCheck";
+    //                }
+    //            }                   
+    //        }
+    //    }
+
+    //    if (result == "WK_IsInCheck" || result == "BK_IsInCheck")
+    //    {                
+    //        Table.Spots[origin.CoordX, origin.CoordY].Piece = Table.Spots[dest.CoordX, dest.CoordY].Piece;
+    //        Table.Spots[origin.CoordX, origin.CoordY].Occupied = true;
+
+    //        Table.Spots[dest.CoordX, dest.CoordY].Piece = attackedPiece;
+    //        Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
+    //    }
+
+    //    if (promoteEventCalled && result == "goodMove")
+    //    {
+    //        Table.Spots[dest.CoordX, dest.CoordY].Piece = new Queen(player == "White");
+    //        Table.Spots[dest.CoordX, dest.CoordY].Occupied = false;
+    //        promoteEventCalled = false;
+    //    }
+
+    //    if (player == "Black")
+    //    {
+    //        this.Table = flipTable(this.Table);
+    //    }
+
+    //    return result;
+    //}
 }

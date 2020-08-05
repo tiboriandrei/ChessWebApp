@@ -43,5 +43,12 @@ namespace ChessClassLibrary
             PlayerMoves?.Invoke(sender, e);
         }
 
+        // ----------------------------------------------------------------
+
+        public event EventHandler<string> Result;
+        public void OnResult(object sender, string e)
+        {
+            Result?.Invoke(sender, e);
+        }
     }
 }
