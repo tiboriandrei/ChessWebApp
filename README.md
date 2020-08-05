@@ -65,3 +65,6 @@ v7. Implemented Pawn promotion using EventHandler<CustomEventArgs> from a single
        
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 v8. ClassLibrary modifications
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+v9. More ClassLibrary modifications. Established comunnication between object by delegates and events. Moved Move functionality in Table. Player raises event and Table catches it and moves accordingly using object sender. Table sends moveResult through eventArgs to Game. 
