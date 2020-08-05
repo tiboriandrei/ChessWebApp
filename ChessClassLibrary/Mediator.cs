@@ -12,6 +12,12 @@ namespace ChessClassLibrary
         public string player { get; set; }
     }
 
+    public class PlayerMoveEventArgs : EventArgs
+    {
+        public Spot origin { get; set; }
+        public Spot dest { get; set; }
+    }       
+
     public sealed class Mediator
     {
         private static readonly Mediator _Instance = new Mediator();
@@ -21,32 +27,21 @@ namespace ChessClassLibrary
             return _Instance;
         }
 
-        public event EventHandler<PawnPromotionEventArgs> PawnPromotion;
+        // ----------------------------------------------------------------
 
+        public event EventHandler<PawnPromotionEventArgs> PawnPromotion;
         public void OnPawnPromotion(object sender, PawnPromotionEventArgs e)
         {
             PawnPromotion?.Invoke(this, e);
         }
 
+        // ----------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-        //public void _OnPawnPromotion(PawnPromotionEventArgs args)
-        //{
-        //    EventHandler<PawnPromotionEventArgs> handler = PawnPromotion;
-        //   // handler?.Invoke(this, new PawnPromotionEventArgs { dest = args.dest, player = args.player });
-
-        //    if (handler!=null)
-        //    {
-        //        handler(this, args);
-        //    }           
-        //}
+        public event EventHandler<PlayerMoveEventArgs> PlayerMoves;
+        public void OnPlayerMoves(object sender, PlayerMoveEventArgs e)
+        {
+            PlayerMoves?.Invoke(sender, e);
+        }
 
     }
 }

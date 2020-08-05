@@ -9,6 +9,7 @@ using ChessClassLibrary;
 using Newtonsoft.Json;
 using ChessWebApp.Data;
 using ChessWebApp.Data.Entities;
+using ChessClassLibrary.Players;
 
 namespace ChessWebApp.Controllers
 {
@@ -53,10 +54,10 @@ namespace ChessWebApp.Controllers
 
         public IActionResult ChessGame()
         {
-            Player player1 = _repository.GetPlayerByID(10);
-            Player player2 = _repository.GetPlayerByID(11);
+            //Player player1 = _repository.GetPlayerByID(10);
+            //Player player2 = _repository.GetPlayerByID(11);
 
-            Game chessGame = new Game(player1, player2);
+            //Game chessGame = new Game();
 
             //_repository.AddGame(chessGame);
             
@@ -68,16 +69,47 @@ namespace ChessWebApp.Controllers
             return View();
         }
 
-        public static int hardcodedGetGameID = 35;        
+        public static int hardcodedGetGameID = 35;
+
 
         [HttpPost]
-        public JsonResult Move(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
+        public JsonResult BlackMove(int originColumn, int originRow, int destColumn, int destRow, string player, string piece) {
+
+            Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
+
+            Black p = new Black("B", 0, 0, 0);
+
+            var origin = new Spot(originColumn - 1, originRow - 1);
+            var dest = new Spot(destColumn - 1, destRow - 1);
+
+            p.DoAMove(origin, dest);
+
+            string moveResult = returnedGame.MoveResult;
+            if (moveResult == "goodMove")
+            {
+                _repository.UpdateGame(hardcodedGetGameID, originColumn - 1, originRow - 1, destColumn - 1, destRow - 1, player, piece);
+            }
+
+            return Json(moveResult);
+        }
+
+
+        [HttpPost]
+        public JsonResult WhiteMove(int originColumn, int originRow, int destColumn, int destRow, string player, string piece)
         {            
             try
             {
-                Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);                
-                string moveResult = returnedGame.MovePiece(piece, originColumn-1, originRow-1, destColumn-1, destRow-1, player);
+                Game returnedGame = _repository.GetGameByID(hardcodedGetGameID);
 
+                White p = new White("W", 0,0,0);
+                //White p = (White)_repository.GetPlayerByID(10);
+
+                var origin = new Spot(originColumn - 1, originRow - 1);
+                var dest = new Spot(destColumn - 1, destRow - 1);
+                              
+                p.DoAMove(origin, dest);                
+
+                string moveResult = returnedGame.MoveResult;
                 if (moveResult == "goodMove")
                 {
                     _repository.UpdateGame(hardcodedGetGameID, originColumn - 1, originRow - 1, destColumn - 1, destRow - 1, player, piece);

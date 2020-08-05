@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary
 {
-    public class Player
+    public abstract class Player
     {
         public string Name { get; set; }
         public int NrOfWins { get; set; }
@@ -22,6 +22,8 @@ namespace ChessClassLibrary
             NrOfDraws = nrOfDraws;
             MatchHistory = new List<string>();
         }
+
+        public abstract void DoAMove(Spot origin, Spot dest);        
 
         public string Stats {
             get {

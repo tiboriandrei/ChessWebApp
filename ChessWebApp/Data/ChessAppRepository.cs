@@ -1,5 +1,6 @@
 ﻿using ChessClassLibrary;
 using ChessClassLibrary.Pieces;
+using ChessClassLibrary.Players;
 using ChessWebApp.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -83,8 +84,8 @@ namespace ChessWebApp.Data
             {
                 if (game.Id == id)
                 {
-                    Player p1 = new Player(game.Player1.Name, game.Player1.NrOfWins, game.Player1.NrOfLosses, game.Player1.NrOfDraws);
-                    Player p2 = new Player(game.Player2.Name, game.Player2.NrOfWins, game.Player2.NrOfLosses, game.Player2.NrOfDraws);
+                    Player p1 = new White(game.Player1.Name, game.Player1.NrOfWins, game.Player1.NrOfLosses, game.Player1.NrOfDraws);
+                    Player p2 = new Black(game.Player2.Name, game.Player2.NrOfWins, game.Player2.NrOfLosses, game.Player2.NrOfDraws);
                     
                     List<Spot> spotList = new List<Spot>();
                     foreach (var spot in game.GameState.Spots)
@@ -129,7 +130,7 @@ namespace ChessWebApp.Data
 
                     Table restoredTable = new Table(spotList);
 
-                    g = new Game(p1, p2, restoredTable);
+                    g = new Game(restoredTable);
                 }
             }
 
@@ -143,27 +144,29 @@ namespace ChessWebApp.Data
 
         public Player GetPlayerByID(int id)
         {
-            List<Player> playerList = new List<Player>();
-            foreach (var player in _ctx.Players) 
-            {
-                if (player.Id == id)
-                {
-                    Player p = new Player(player.Name, player.NrOfWins, player.NrOfLosses, player.NrOfDraws);
-                    playerList.Add(p);
-                }                          
-            }
-            return playerList.First();
+            throw new NotImplementedException();
+            //List<Player> playerList = new List<Player>();
+            //foreach (var player in _ctx.Players)
+            //{
+            //    if (player.Id == id)
+            //    {
+            //        Player p = new Player(player.Name, player.NrOfWins, player.NrOfLosses, player.NrOfDraws);
+            //        playerList.Add(p);
+            //    }
+            //}
+            //return playerList.First();
         }
 
         public IEnumerable<Player> GetPlayers()
         {
-            List<Player> playerList = new List<Player>();
-            foreach (var player in _ctx.Players)
-            {
-                Player p = new Player(player.Name, player.NrOfWins, player.NrOfLosses, player.NrOfDraws);
-                playerList.Add(p);
-            }
-            return playerList;            
+            throw new NotImplementedException();
+            //List<Player> playerList = new List<Player>();
+            //foreach (var player in _ctx.Players)
+            //{
+            //    Player p = new Player(player.Name, player.NrOfWins, player.NrOfLosses, player.NrOfDraws);
+            //    playerList.Add(p);
+            //}
+            //return playerList;            
         }
 
         public GameStateForJS[] LoadGameState(int id)

@@ -9,7 +9,8 @@ namespace ChessWebApp.Data
     public interface IChessPlayersRepository
     {
         IEnumerable<Player> GetPlayers();
-        Player GetPlayerByID(int id);
+
+        //Player GetPlayerByID(int id);
 
         void AddPlayer(Player newPlayer);
 

@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="ChessPiece.cs" />
     <Compile Include="Mediator.cs" />
+    <Compile Include="Players\Black.cs" />
+    <Compile Include="Players\White.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Pieces\Horseman.cs" />
