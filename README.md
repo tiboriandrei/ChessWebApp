@@ -62,3 +62,6 @@ Refactored the override ToString() method from the piece classes into the base c
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 v7. Implemented Pawn promotion using EventHandler<CustomEventArgs> from a singleton Mediator.cs static class
+       
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+v8. ClassLibrary modifications
